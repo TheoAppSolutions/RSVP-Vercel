@@ -2,7 +2,7 @@
 
 import { EVENT, PALETTE, GLOBAL_CSS_1 } from '../constants';
 import { cormorant, jost } from '../../fonts';
-import RSVPForm from '../RSVPForm';
+import RSVPForm from '../components/RSVPForm';
 
 // -----------------------------------------------------------------------
 // Design 1 — "Botanical Garland"

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { EVENT } from "./constants";
-import type { RSVPTheme } from "@/components/RSVPForm";
+import { EVENT } from "../constants";
+import type { RSVPTheme } from "@/app/glenna/components/RSVPForm2";
 
 // -----------------------------------------------------------------------
 // Glenna-scoped RSVP form.

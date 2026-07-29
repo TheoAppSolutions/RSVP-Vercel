@@ -1,4 +1,4 @@
-import RSVPForm from "../RSVPForm";
+import RSVPForm from "../components/RSVPForm";
 import { EVENT, THEME_3 } from "../constants";
 
 // -----------------------------------------------------------------------

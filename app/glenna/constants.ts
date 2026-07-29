@@ -3,9 +3,9 @@
 // Edit event details or themes here once — every design picks it up.
 // -----------------------------------------------------------------------
 
-import type { RSVPTheme } from "@/components/RSVPForm";
+import type { RSVPTheme } from "@/app/glenna/components/RSVPForm2";
 
-export { EVENT } from "@/lib/event-glenna";
+export { EVENT } from "@/app/glenna/lib/event";
 
 // -----------------------------------------------------------------------
 // Per-design RSVPTheme tokens

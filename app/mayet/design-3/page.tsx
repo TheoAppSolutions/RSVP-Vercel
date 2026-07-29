@@ -2,7 +2,7 @@
 
 import { EVENT, PALETTE, GLOBAL_CSS_3 } from '../constants';
 import { playfair, jost } from '../../fonts';
-import RSVPForm from '../RSVPForm';
+import RSVPForm from '../components/RSVPForm';
 
 // -----------------------------------------------------------------------
 // Design 3 — "Botanical Frame"

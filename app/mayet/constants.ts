@@ -3,14 +3,14 @@
 // Edit event details or palette here once — every design picks it up.
 // -----------------------------------------------------------------------
 
-export { EVENT, PALETTE } from "@/lib/event";
+export { EVENT, PALETTE } from "@/app/mayet/lib/event";
 
 // -----------------------------------------------------------------------
 // Per-design CSS variable blocks (injected via <style> tag in each page)
 // These define the :root tokens; only the values differ per design.
 // -----------------------------------------------------------------------
 
-import { PALETTE as P } from "@/lib/event";
+import { PALETTE as P } from "@/app/mayet/lib/event";
 
 /** Design 1 — "Botanical Garland" (cream + burnt orange panel line) */
 export const GLOBAL_CSS_1 = `

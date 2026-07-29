@@ -2,7 +2,7 @@
 
 import { EVENT, GLOBAL_CSS_2 } from '../constants';
 import { fraunces, jost } from '../../fonts';
-import RSVPForm from '../RSVPForm';
+import RSVPForm from '../components/RSVPForm';
 
 // -----------------------------------------------------------------------
 // Design 2 — "Garden Ticket"

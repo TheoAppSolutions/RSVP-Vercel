@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { EVENT } from "./constants";
-import type { Attendance } from "@/lib/event";
+import { EVENT } from "../constants";
+import type { Attendance } from "@/app/mayet/lib/event";
 
 // -----------------------------------------------------------------------
 // Mayet-scoped RSVP form.

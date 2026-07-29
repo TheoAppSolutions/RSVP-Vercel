@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { EVENT, PALETTE, type Attendance } from '@/lib/event';
+import { playfair, jost } from '../fonts';
 
 // -----------------------------------------------------------------------
 // DESIGN 3 — "Botanical Frame"
@@ -75,9 +76,8 @@ export default function FrameDesign() {
   }
 
   return (
-    <div className="page">
+    <div className={`page ${playfair.variable} ${jost.variable}`}>
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500;1,600&family=Jost:wght@300;400;500&display=swap');
         :root {
           --cream: ${PALETTE.cream};
           /* This design keeps a slightly warmer local "panel" shade than
@@ -103,7 +103,7 @@ export default function FrameDesign() {
           min-height: 100vh;
           background: var(--cream);
           color: var(--ink);
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-weight: 300;
           display: flex;
           justify-content: center;
@@ -119,14 +119,14 @@ export default function FrameDesign() {
           border-radius: 4px;
           padding: 56px 40px 44px;
           box-shadow: 0 24px 50px -28px rgba(74, 46, 23, 0.3);
-          animation: rise 900ms ease-out both;
+          animation: rise 500ms ease-out both;
           overflow: hidden;
         }
 
         @keyframes rise {
           from {
             opacity: 0;
-            transform: translateY(14px);
+            transform: translateY(6px);
           }
           to {
             opacity: 1;
@@ -165,7 +165,7 @@ export default function FrameDesign() {
           top: 38%;
           left: 50%;
           transform: translate(-50%, -50%);
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-playfair), serif;
           font-weight: 600;
           font-size: 260px;
           color: var(--burnt);
@@ -205,7 +205,7 @@ export default function FrameDesign() {
         }
 
         .name {
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-playfair), serif;
           font-style: italic;
           font-weight: 600;
           font-size: 42px;
@@ -223,7 +223,7 @@ export default function FrameDesign() {
         }
 
         .invite-line {
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-playfair), serif;
           font-style: italic;
           font-size: 17px;
           line-height: 1.75;
@@ -252,14 +252,14 @@ export default function FrameDesign() {
           margin: 0 0 6px;
         }
         .detail-row .value {
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-playfair), serif;
           font-weight: 500;
           font-size: 16px;
           margin: 0;
         }
         .detail-row .value span {
           display: block;
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-size: 12px;
           font-weight: 300;
           color: var(--sage);
@@ -312,7 +312,7 @@ export default function FrameDesign() {
         }
 
         .form-title {
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-playfair), serif;
           font-style: italic;
           font-size: 22px;
           text-align: center;
@@ -345,7 +345,7 @@ export default function FrameDesign() {
           border: 1px solid rgba(163, 152, 20, 0.3);
           border-radius: 999px;
           color: var(--ink);
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-weight: 300;
           font-size: 14px;
           padding: 11px 18px;
@@ -406,7 +406,7 @@ export default function FrameDesign() {
 
         .status-msg {
           text-align: center;
-          font-family: 'Playfair Display', serif;
+          font-family: var(--font-playfair), serif;
           font-style: italic;
           font-size: 14px;
           color: var(--burnt);

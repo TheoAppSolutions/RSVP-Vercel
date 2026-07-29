@@ -139,6 +139,16 @@ within a second or two.
 To change any of these, edit the `EVENT` object near the top of
 `app/rsvp/page.tsx`.
 
+## Fonts
+
+Fonts are loaded via `app/fonts.ts` using Next.js's built-in `next/font/google`,
+not a CSS `@import`. This self-hosts the font files at build time so the
+browser never makes a separate request to fonts.googleapis.com — which
+avoids the "flash of unstyled text" (page renders in a fallback font,
+then visibly reflows once the real font arrives) that a CSS `@import`
+causes. If you add a new font to a design, add it in `app/fonts.ts`
+rather than importing it directly in the page.
+
 ## Design notes
 
 - Palette: warm ivory background (`#FBF3E7`) with a garden accent set —

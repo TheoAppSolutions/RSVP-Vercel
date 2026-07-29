@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { EVENT, PALETTE, type Attendance } from '@/lib/event';
+import { cormorant, jost } from '../fonts';
 
 // -----------------------------------------------------------------------
 // Design 1 — "Botanical Garland"
@@ -36,10 +37,8 @@ export default function RsvpPage() {
   }
 
   return (
-    <div className="page">
+    <div className={`page ${cormorant.variable} ${jost.variable}`}>
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap');
-
         :root {
           --cream: ${PALETTE.cream};
           --panel: ${PALETTE.panel};
@@ -66,7 +65,7 @@ export default function RsvpPage() {
           min-height: 100vh;
           background: radial-gradient(ellipse at 50% -10%, #fff9ef 0%, var(--cream) 60%);
           color: var(--ink);
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-weight: 300;
           display: flex;
           justify-content: center;
@@ -76,13 +75,13 @@ export default function RsvpPage() {
         .card {
           width: 100%;
           max-width: 640px;
-          animation: rise 900ms ease-out both;
+          animation: rise 500ms ease-out both;
         }
 
         @keyframes rise {
           from {
             opacity: 0;
-            transform: translateY(14px);
+            transform: translateY(6px);
           }
           to {
             opacity: 1;
@@ -104,7 +103,7 @@ export default function RsvpPage() {
         }
 
         .eyebrow {
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-weight: 400;
           font-size: 12px;
           letter-spacing: 0.35em;
@@ -138,7 +137,7 @@ export default function RsvpPage() {
         }
 
         .name {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-weight: 500;
           font-size: 46px;
           line-height: 1.1;
@@ -147,7 +146,7 @@ export default function RsvpPage() {
         }
 
         .celebrates {
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-size: 13px;
           letter-spacing: 0.28em;
           text-transform: uppercase;
@@ -190,7 +189,7 @@ export default function RsvpPage() {
         }
 
         .invite-line {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-style: italic;
           font-size: 19px;
           line-height: 1.7;
@@ -213,7 +212,7 @@ export default function RsvpPage() {
         }
 
         .detail-item .value {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: 24px;
           font-weight: 500;
           color: var(--ink);
@@ -222,7 +221,7 @@ export default function RsvpPage() {
 
         .detail-item .value span {
           display: block;
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-size: 14px;
           font-weight: 300;
           color: var(--sage);
@@ -313,7 +312,7 @@ export default function RsvpPage() {
         }
 
         .form-title {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: 26px;
           text-align: center;
           margin: 0 0 6px;
@@ -348,7 +347,7 @@ export default function RsvpPage() {
           border: none;
           border-bottom: 1px solid var(--panel-line);
           color: var(--ink);
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-weight: 300;
           font-size: 16px;
           padding: 8px 2px;
@@ -370,7 +369,7 @@ export default function RsvpPage() {
         .field textarea {
           resize: vertical;
           min-height: 64px;
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
         }
 
         .attend-options {
@@ -383,7 +382,7 @@ export default function RsvpPage() {
           border: 1px solid var(--panel-line);
           background: transparent;
           color: var(--sage);
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-size: 13px;
           letter-spacing: 0.05em;
           padding: 14px 10px;
@@ -419,7 +418,7 @@ export default function RsvpPage() {
           color: #fff9ef;
           border: none;
           border-radius: 3px;
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-weight: 500;
           font-size: 13px;
           letter-spacing: 0.2em;
@@ -442,7 +441,7 @@ export default function RsvpPage() {
           text-align: center;
           font-size: 14px;
           margin-top: 18px;
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-style: italic;
         }
 
@@ -532,7 +531,7 @@ export default function RsvpPage() {
               x="100"
               y="118"
               textAnchor="middle"
-              fontFamily="'Cormorant Garamond', serif"
+              fontFamily="var(--font-cormorant), serif"
               fontSize="54"
               fill="var(--burnt)"
               fontStyle="italic"

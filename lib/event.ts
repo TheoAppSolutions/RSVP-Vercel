@@ -11,7 +11,7 @@ export const EVENT = {
   venue: 'Summit Hotel',
   // Used to build each page's embedded map — replace with the exact
   // address (e.g. "Summit Hotel, [Street], [City]") for a precise pin.
-  mapQuery: 'Summit Hotel, Tacloban City',
+  mapQuery: 'Summit Hotel',
   rsvpBy: 'November 5, 2026',
 } as const;
 

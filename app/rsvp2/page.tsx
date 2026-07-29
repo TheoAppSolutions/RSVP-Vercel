@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { EVENT, PALETTE, type Attendance } from '@/lib/event';
+import { fraunces, jost } from '../fonts';
 
 // -----------------------------------------------------------------------
 // DESIGN 2 — "Garden Ticket"
@@ -38,9 +39,8 @@ export default function TicketDesign() {
   }
 
   return (
-    <div className="page">
+    <div className={`page ${fraunces.variable} ${jost.variable}`}>
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Jost:wght@300;400;500&display=swap');
         :root {
           --cream: ${PALETTE.cream};
           --panel: ${PALETTE.panel};
@@ -64,7 +64,7 @@ export default function TicketDesign() {
           min-height: 100vh;
           background: var(--cream);
           color: var(--ink);
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-weight: 300;
           display: flex;
           justify-content: center;
@@ -80,13 +80,13 @@ export default function TicketDesign() {
           border-radius: 10px;
           overflow: hidden;
           box-shadow: 0 30px 60px -30px rgba(74, 46, 23, 0.35);
-          animation: rise 900ms ease-out both;
+          animation: rise 500ms ease-out both;
         }
 
         @keyframes rise {
           from {
             opacity: 0;
-            transform: translateY(14px);
+            transform: translateY(6px);
           }
           to {
             opacity: 1;
@@ -115,7 +115,7 @@ export default function TicketDesign() {
         }
 
         .stub-tag {
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-size: 10px;
           letter-spacing: 0.3em;
           text-transform: uppercase;
@@ -124,7 +124,7 @@ export default function TicketDesign() {
         }
 
         .stub-number {
-          font-family: 'Fraunces', serif;
+          font-family: var(--font-fraunces), serif;
           font-size: 92px;
           font-weight: 600;
           line-height: 1;
@@ -177,7 +177,7 @@ export default function TicketDesign() {
         }
 
         .name {
-          font-family: 'Fraunces', serif;
+          font-family: var(--font-fraunces), serif;
           font-weight: 600;
           font-size: 36px;
           line-height: 1.12;
@@ -185,7 +185,7 @@ export default function TicketDesign() {
         }
 
         .celebrates {
-          font-family: 'Fraunces', serif;
+          font-family: var(--font-fraunces), serif;
           font-style: italic;
           font-weight: 500;
           font-size: 17px;
@@ -240,7 +240,7 @@ export default function TicketDesign() {
         }
 
         .info-value {
-          font-family: 'Fraunces', serif;
+          font-family: var(--font-fraunces), serif;
           font-size: 18px;
           font-weight: 500;
           color: var(--ink);
@@ -291,7 +291,7 @@ export default function TicketDesign() {
         /* ---------- RSVP ---------- */
 
         .form-title {
-          font-family: 'Fraunces', serif;
+          font-family: var(--font-fraunces), serif;
           font-weight: 500;
           font-size: 20px;
           margin: 0 0 4px;
@@ -322,7 +322,7 @@ export default function TicketDesign() {
           border: 1px solid rgba(163, 152, 20, 0.25);
           border-radius: 20px;
           color: var(--ink);
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-jost), sans-serif;
           font-weight: 300;
           font-size: 14px;
           padding: 10px 16px;
@@ -383,7 +383,7 @@ export default function TicketDesign() {
 
         .status-msg {
           text-align: center;
-          font-family: 'Fraunces', serif;
+          font-family: var(--font-fraunces), serif;
           font-style: italic;
           font-size: 14px;
           color: var(--burnt);

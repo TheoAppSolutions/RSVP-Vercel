@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import { SHELL_COLORS, GLENNA_COLORS } from "./lib/colors";
+import { SHELL_COLORS, GLENNA_COLORS, MAYET_COLORS } from "./lib/colors";
 
 // -----------------------------------------------------------------------
 // All color values here come from lib/colors.ts (the single source of

@@ -1,7 +1,12 @@
 // -----------------------------------------------------------------------
-// Shared across every RSVP page design (rsvp, rsvp2, rsvp3, ...).
-// Edit event details or palette here once — every page picks it up.
+// Shared across every RSVP page design (design-1, design-2, design-3).
+// Edit event details here once — every page picks it up. Colors come
+// from lib/colors.ts (the single source of truth for every hex value in
+// the app) — see app/glenna/lib/event.ts for the same PALETTE pattern
+// with Glenna's colors.
 // -----------------------------------------------------------------------
+
+import { MAYET_COLORS } from "@/lib/colors";
 
 export const EVENT = {
   name: 'Mayet Sumagaysay',
@@ -24,13 +29,4 @@ export type Attendance = 'joyfully-accepts' | 'regretfully-declines' | '';
 // "ink", "sage", and "panel" are the neutral base most designs share;
 // a page can still locally shade "panel" slightly warmer/cooler if the
 // design calls for it.
-export const PALETTE = {
-  cream: '#FBF3E7',
-  panel: '#FFFFFF',
-  ink: '#4A2E17',
-  sage: '#8A7A57',
-  burnt: '#E15505',
-  coral: '#F94063',
-  marigold: '#FFA82C',
-  olive: '#A39814',
-} as const;
+export const PALETTE = MAYET_COLORS;

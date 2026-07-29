@@ -1,6 +1,6 @@
 'use client';
 
-import { EVENT, GLOBAL_CSS_2 } from '../constants';
+import { EVENT, STYLE_2 } from '../constants';
 import { fraunces, jost } from '../../fonts';
 import RSVPForm from '../components/RSVPForm';
 
@@ -15,7 +15,7 @@ import RSVPForm from '../components/RSVPForm';
 export default function Design2() {
   return (
     <div className={`page ${fraunces.variable} ${jost.variable}`}>
-      <style>{GLOBAL_CSS_2}</style>
+      <style>{STYLE_2}</style>
 
       <style>{`
         .page {

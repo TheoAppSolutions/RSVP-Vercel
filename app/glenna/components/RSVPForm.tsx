@@ -2,18 +2,37 @@
 
 import { useState } from "react";
 import { EVENT } from "../constants";
-import type { RSVPTheme } from "@/app/glenna/components/RSVPForm2";
 
 // -----------------------------------------------------------------------
 // Glenna-scoped RSVP form.
-// Shares the RSVPTheme interface with the generic component but is
-// self-contained: uses the /api/rsvp/glenna endpoint and hard-codes
-// Glenna-specific copy (reply date, message label, success text).
+// Self-contained: posts to /api/rsvp/glenna and hard-codes Glenna-specific
+// copy (reply date, success text). Takes a `theme` prop so each design
+// page can hand it its own Tailwind classes (see ../constants.ts for
+// STYLE_1/2/3) without duplicating the form logic per design. The wire
+// payload ({name, email, attending, guests, message}) matches the shared
+// handler in lib/rsvp/ — see app/mayet's RSVPForm for the same contract
+// with different markup/styling.
 // -----------------------------------------------------------------------
 
-export type { RSVPTheme };
+export type RSVPTheme = {
+  label: string;
+  input: string;
+  fieldset: string;
+  radioWrap: string;
+  radioActive: string;
+  radioInactive: string;
+  button: string;
+  helper: string;
+  success: string;
+  error: string;
+};
 
-export default function RSVPForm({ theme }: { theme: RSVPTheme }) {
+type Props = {
+  theme: RSVPTheme;
+  formPrefix?: string;
+};
+
+export default function RSVPForm({ theme, formPrefix = "glenna" }: Props) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [attending, setAttending] = useState<"yes" | "no" | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
@@ -69,13 +88,13 @@ export default function RSVPForm({ theme }: { theme: RSVPTheme }) {
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-5" noValidate>
       <div>
-        <label htmlFor="glenna-name" className={theme.label}>Full name</label>
-        <input id="glenna-name" name="name" type="text" required className={`focus-ring ${theme.input}`} placeholder="Your name" />
+        <label htmlFor={`${formPrefix}-name`} className={theme.label}>Full name</label>
+        <input id={`${formPrefix}-name`} name="name" type="text" required className={`focus-ring ${theme.input}`} placeholder="Your name" />
       </div>
 
       <div>
-        <label htmlFor="glenna-email" className={theme.label}>Email</label>
-        <input id="glenna-email" name="email" type="email" required className={`focus-ring ${theme.input}`} placeholder="you@example.com" />
+        <label htmlFor={`${formPrefix}-email`} className={theme.label}>Email</label>
+        <input id={`${formPrefix}-email`} name="email" type="email" required className={`focus-ring ${theme.input}`} placeholder="you@example.com" />
       </div>
 
       <fieldset className={theme.fieldset}>
@@ -99,13 +118,13 @@ export default function RSVPForm({ theme }: { theme: RSVPTheme }) {
       </fieldset>
 
       <div>
-        <label htmlFor="glenna-guests" className={theme.label}>Number in your party</label>
-        <input id="glenna-guests" name="guests" type="number" min={1} max={6} defaultValue={1} className={`focus-ring ${theme.input}`} />
+        <label htmlFor={`${formPrefix}-guests`} className={theme.label}>Number in your party</label>
+        <input id={`${formPrefix}-guests`} name="guests" type="number" min={1} max={6} defaultValue={1} className={`focus-ring ${theme.input}`} />
       </div>
 
       <div>
-        <label htmlFor="glenna-message" className={theme.label}>Message for Atty. Glenna (optional)</label>
-        <textarea id="glenna-message" name="message" rows={3} className={`focus-ring ${theme.input}`} placeholder="Leave a note or well-wish" />
+        <label htmlFor={`${formPrefix}-message`} className={theme.label}>Message for Atty. Glenna (optional)</label>
+        <textarea id={`${formPrefix}-message`} name="message" rows={3} className={`focus-ring ${theme.input}`} placeholder="Leave a note or well-wish" />
       </div>
 
       {errorMsg && <p className={theme.error}>{errorMsg}</p>}

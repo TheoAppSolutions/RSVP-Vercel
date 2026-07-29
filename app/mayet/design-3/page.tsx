@@ -1,6 +1,6 @@
 'use client';
 
-import { EVENT, PALETTE, GLOBAL_CSS_3 } from '../constants';
+import { EVENT, PALETTE, STYLE_3 } from '../constants';
 import { playfair, jost } from '../../fonts';
 import RSVPForm from '../components/RSVPForm';
 
@@ -51,7 +51,7 @@ function LeafSprig({ rotate }: { rotate: number }) {
 export default function Design3() {
   return (
     <div className={`page ${playfair.variable} ${jost.variable}`}>
-      <style>{GLOBAL_CSS_3}</style>
+      <style>{STYLE_3}</style>
 
       <style>{`
         .page {

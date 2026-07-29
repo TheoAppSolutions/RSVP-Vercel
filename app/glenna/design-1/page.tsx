@@ -1,5 +1,5 @@
 import RSVPForm from "../components/RSVPForm";
-import { EVENT, THEME_1 } from "../constants";
+import { EVENT, STYLE_1 } from "../constants";
 
 // -----------------------------------------------------------------------
 // Design 1 — "Rhinestone Ranch"
@@ -64,7 +64,7 @@ export default function Design1() {
 
         <div className="mt-12 w-full rounded-lg border border-denim-300/25 bg-denim-800/40 p-7 text-left shadow-[0_0_40px_-10px_rgba(140,170,210,0.25)] backdrop-blur-sm sm:p-9">
           <h2 className="mb-6 text-center font-script text-3xl text-rhinestone">rsvp</h2>
-          <RSVPForm theme={THEME_1} />
+          <RSVPForm theme={STYLE_1} />
         </div>
       </section>
     </main>

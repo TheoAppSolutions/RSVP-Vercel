@@ -1,6 +1,6 @@
 'use client';
 
-import { EVENT, PALETTE, GLOBAL_CSS_1 } from '../constants';
+import { EVENT, PALETTE, STYLE_1 } from '../constants';
 import { cormorant, jost } from '../../fonts';
 import RSVPForm from '../components/RSVPForm';
 
@@ -13,7 +13,7 @@ import RSVPForm from '../components/RSVPForm';
 export default function Design1() {
   return (
     <div className={`page ${cormorant.variable} ${jost.variable}`}>
-      <style>{GLOBAL_CSS_1}</style>
+      <style>{STYLE_1}</style>
 
       <style>{`
         .page {

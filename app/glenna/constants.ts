@@ -1,18 +1,22 @@
 // -----------------------------------------------------------------------
 // Glenna — shared constants for all design pages.
-// Edit event details or themes here once — every design picks it up.
+// Edit event details, colors, or per-design styles here once — every
+// design picks it up. Naming mirrors app/mayet/constants.ts (EVENT,
+// PALETTE, STYLE_1/2/3) even though the underlying values are Tailwind
+// class bundles here instead of CSS strings — see RSVPTheme in
+// components/RSVPForm.tsx.
 // -----------------------------------------------------------------------
 
-import type { RSVPTheme } from "@/app/glenna/components/RSVPForm2";
+import type { RSVPTheme } from "@/app/glenna/components/RSVPForm";
 
-export { EVENT } from "@/app/glenna/lib/event";
+export { EVENT, PALETTE } from "@/app/glenna/lib/event";
 
 // -----------------------------------------------------------------------
-// Per-design RSVPTheme tokens
+// Per-design style tokens (STYLE_1/2/3, matching Mayet's naming)
 // -----------------------------------------------------------------------
 
 /** Design 1 — "Rhinestone Ranch" (dark denim + rhinestone gold) */
-export const THEME_1: RSVPTheme = {
+export const STYLE_1: RSVPTheme = {
   label: "block font-oswald text-xs uppercase tracking-[0.2em] text-denim-100/80 mb-2",
   input:
     "w-full rounded-sm border border-denim-300/40 bg-denim-900/40 px-4 py-3 text-denim-50 placeholder:text-denim-200/40 outline-none focus:border-rhinestone/70 transition-colors",
@@ -30,7 +34,7 @@ export const THEME_1: RSVPTheme = {
 };
 
 /** Design 2 — "Sapphire Soirée" (midnight sapphire + thin lines) */
-export const THEME_2: RSVPTheme = {
+export const STYLE_2: RSVPTheme = {
   label: "block font-inter text-[11px] uppercase tracking-[0.18em] text-denim-100/60 mb-2",
   input:
     "w-full border-0 border-b border-denim-300/30 bg-transparent px-1 py-3 text-denim-50 placeholder:text-denim-200/30 outline-none focus:border-denim-100 transition-colors",
@@ -48,7 +52,7 @@ export const THEME_2: RSVPTheme = {
 };
 
 /** Design 3 — "Denim Edit" (light denim, bold editorial) */
-export const THEME_3: RSVPTheme = {
+export const STYLE_3: RSVPTheme = {
   label: "block font-work text-xs uppercase tracking-widest text-denim-700 mb-1.5",
   input:
     "w-full rounded-none border-2 border-denim-800 bg-white px-4 py-3 text-denim-900 placeholder:text-denim-400 outline-none focus:bg-denim-50 transition-colors",

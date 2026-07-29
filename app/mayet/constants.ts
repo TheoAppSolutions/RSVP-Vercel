@@ -1,19 +1,22 @@
 // -----------------------------------------------------------------------
 // Mayet — shared constants for all design pages.
-// Edit event details or palette here once — every design picks it up.
+// Edit event details or colors here once — every design picks it up.
+// Naming mirrors app/glenna/constants.ts (EVENT, PALETTE, STYLE_1/2/3)
+// even though the underlying values are CSS custom-property strings
+// here instead of Tailwind class bundles — injected via a <style> tag
+// in each design page.
 // -----------------------------------------------------------------------
 
 export { EVENT, PALETTE } from "@/app/mayet/lib/event";
 
 // -----------------------------------------------------------------------
-// Per-design CSS variable blocks (injected via <style> tag in each page)
-// These define the :root tokens; only the values differ per design.
+// Per-design style tokens (STYLE_1/2/3, matching Glenna's naming)
 // -----------------------------------------------------------------------
 
 import { PALETTE as P } from "@/app/mayet/lib/event";
 
 /** Design 1 — "Botanical Garland" (cream + burnt orange panel line) */
-export const GLOBAL_CSS_1 = `
+export const STYLE_1 = `
   :root {
     --cream: ${P.cream};
     --panel: ${P.panel};
@@ -30,7 +33,7 @@ export const GLOBAL_CSS_1 = `
 `;
 
 /** Design 2 — "Garden Ticket" (same palette, ticket layout) */
-export const GLOBAL_CSS_2 = `
+export const STYLE_2 = `
   :root {
     --cream: ${P.cream};
     --panel: ${P.panel};
@@ -46,7 +49,7 @@ export const GLOBAL_CSS_2 = `
 `;
 
 /** Design 3 — "Botanical Frame" (slightly warmer local panel) */
-export const GLOBAL_CSS_3 = `
+export const STYLE_3 = `
   :root {
     --cream: ${P.cream};
     --panel: #fffdf9;

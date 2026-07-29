@@ -1,172 +1,182 @@
-# Mayet's 65th Birthday — RSVP Site
+# RSVP Suites
 
-A small Next.js app with one page (`/rsvp`) — a garden-themed invitation
-with an RSVP form that saves responses to a Google Sheet.
+A Next.js app hosting RSVP invitation sites for two clients — **Mayet**
+and **Glenna** — each with three visual designs. Every design's form
+saves to that client's own Google Sheet and sends a confirmation email
+to the guest plus a notification email to the event owner.
 
-## What's inside
+## Folder structure
+
+Both clients are mirrors of each other, structurally — same file
+layout, same backend contract — with only their content, palette, and
+markup differing.
 
 ```
 app/
-  layout.tsx        Root layout + page title
-  page.tsx           Redirects "/" to "/rsvp"
-  rsvp/page.tsx       Design 1 — "Botanical Garland" (wreath medallion, single card)
-  rsvp2/page.tsx      Design 2 — "Garden Ticket" (event-ticket stub layout)
-  rsvp3/page.tsx      Design 3 — "Botanical Frame" (symmetric, corner leaf sprigs, "65" watermark)
-  api/rsvp/route.ts   API route: writes each RSVP to Google Sheets
+  layout.tsx, page.tsx, fonts.ts, globals.css   Shared shell + client picker
+  api/rsvp/
+    mayet/route.ts     Mayet's API route  — thin, uses lib/rsvp/handler.ts
+    glenna/route.ts    Glenna's API route — thin, uses lib/rsvp/handler.ts
+  mayet/
+    page.tsx            Design picker ("View 3 Designs")
+    rsvp.config.ts       Which sheet + owner inbox this client uses
+    lib/event.ts          Event details + palette (edit here to rebrand)
+    constants.ts           Re-exports EVENT + per-design CSS var blocks
+    components/RSVPForm.tsx  Mayet-styled form (styled-jsx classes)
+    design-1/page.tsx      "Botanical Garland"
+    design-2/page.tsx      "Garden Ticket"
+    design-3/page.tsx      "Botanical Frame"
+  glenna/
+    page.tsx            Design picker
+    rsvp.config.ts       Which sheet + owner inbox this client uses
+    lib/event.ts          Event details
+    constants.ts           Re-exports EVENT + per-design theme tokens
+    components/RSVPForm.tsx  Glenna-styled form (Tailwind theme prop)
+    design-1/page.tsx      "Rhinestone Ranch"
+    design-2/page.tsx      "Sapphire Soirée"
+    design-3/page.tsx      "Denim Edit"
 lib/
-  event.ts            Shared event details, attendance type, and color
-                       palette — imported by every design above. Edit
-                       here once and it updates all three pages.
-package.json
-next.config.mjs
-tsconfig.json
-.env.example          Template for the required environment variables
+  rsvp/
+    types.ts     Shared RSVPSubmission / RSVPClientConfig contracts
+    sheets.ts     appendRSVPRow() — writes a row via one shared Google service account
+    email.ts      sendRSVPEmails() — guest confirmation + owner notification via Resend
+    handler.ts    createRSVPHandler() — the actual POST logic, shared by both routes
 ```
 
-All three designs import the same data from `lib/event.ts` — the event
-name/date/time/venue, the RSVP form's attendance type, and the garden
-color palette (burnt orange, coral pink, marigold, olive gold). Change
-the date, venue, or any color there once and it updates `/rsvp`, `/rsvp2`,
-and `/rsvp3` together. A couple of pages keep one small local override on
-top of the shared palette (e.g. `/rsvp3` uses a slightly warmer white for
-its card background) — those are called out with a comment right above
-the override so they're easy to find if you want to unify them too.
+**Why it's split this way:** the two clients look completely different
+(different fonts, palettes, layout — see `components/RSVPForm.tsx` in
+each), so their forms and design pages stay separate. But "save a row
+to a sheet" and "send two emails" is identical logic for both, so that
+part lives once in `lib/rsvp/` and each client just plugs in its own
+config (`rsvp.config.ts`) — its sheet ID env var, its owner's email env
+var, its event name. A client's `route.ts` is one line:
 
-All three pages post to the same `/api/rsvp` route, so the Google Sheets
-setup below only needs to be done once no matter how many designs you
-keep.
+```ts
+export const POST = createRSVPHandler(RSVP_CONFIG);
+```
 
-Styling is done with `styled-jsx`, which ships with Next.js — there's
-nothing extra to install for the design itself.
+To add a third client later: copy an existing client folder, edit its
+`lib/event.ts` / `constants.ts` / `rsvp.config.ts`, add a matching
+`app/api/rsvp/<name>/route.ts`, and set that client's env vars. No
+changes needed in `lib/rsvp/`.
 
 ---
 
 ## 1. Run it locally
 
-```bash
+```
 npm install
-cp .env.example .env.local   # then fill in the three values (see step 2)
+cp .env.example .env.local   # then fill in the values (see step 2)
 npm run dev
 ```
 
-Visit `http://localhost:3000` — it will redirect to `/rsvp`.
+Visit `http://localhost:3000` — it links out to `/mayet` and `/glenna`.
 
 ---
 
-## 2. Connect it to a Google Sheet
+## 2. Connect Google Sheets (one service account, two sheets)
 
-The form won't save anywhere until you complete this one-time setup
-(about 10 minutes).
+Both clients share a single Google service account; each just writes to
+its own sheet.
 
-### a) Create the sheet
+### a) Create both sheets
 
-Create a new Google Sheet. In row 1, add these headers:
-
-```
-Name | Attendance | Guests | Message | Submitted At
-```
-
-Copy the **Sheet ID** out of its URL:
+For each client, create a Google Sheet with this header row:
 
 ```
-https://docs.google.com/spreadsheets/d/THIS_PART_IS_THE_ID/edit
+Name | Email | Attendance | Guests | Message | Submitted At
 ```
 
-### b) Create a Google Cloud service account
+Copy each sheet's ID out of its URL:
+`https://docs.google.com/spreadsheets/d/THIS_PART_IS_THE_ID/edit`
 
-A service account is a robot Google identity that can write to the sheet
-without needing your personal login.
+### b) Create one Google Cloud service account
 
-1. Go to [console.cloud.google.com](https://console.cloud.google.com/) and
-   create a project (or use an existing one).
-2. In the search bar, go to **APIs & Services → Library**, search for
-   **Google Sheets API**, and click **Enable**.
-3. Go to **APIs & Services → Credentials → Create Credentials → Service
-   account**. Give it any name (e.g. `rsvp-writer`) and finish the wizard.
-4. Open the service account you just created → **Keys** tab → **Add Key →
-   Create new key → JSON**. This downloads a `.json` file — keep it safe,
-   don't commit it to git.
-5. Open that JSON file. You need two fields from it:
-   - `client_email`
-   - `private_key`
+1. In [console.cloud.google.com](https://console.cloud.google.com/), create/select a project.
+2. **APIs & Services → Library** → enable **Google Sheets API**.
+3. **APIs & Services → Credentials → Create Credentials → Service account.**
+4. Open it → **Keys** → **Add Key → Create new key → JSON**. Keep this file safe, never commit it.
+5. From that JSON, you need `client_email` and `private_key`.
 
-### c) Share the sheet with the service account
+### c) Share both sheets with the service account
 
-Back in your Google Sheet, click **Share**, and paste in the
-`client_email` address from the JSON file (it looks like
-`rsvp-writer@your-project.iam.gserviceaccount.com`). Give it **Editor**
-access.
+For each sheet, click **Share**, paste in the `client_email`, and give it **Editor** access.
 
-### d) Set the environment variables
-
-Locally, put these in `.env.local`:
+### d) Set environment variables
 
 ```
-GOOGLE_SHEET_ID=your-sheet-id
 GOOGLE_SERVICE_ACCOUNT_EMAIL=rsvp-writer@your-project.iam.gserviceaccount.com
 GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvQ...\n-----END PRIVATE KEY-----\n"
+MAYET_GOOGLE_SHEET_ID=your-mayet-sheet-id
+GLENNA_GOOGLE_SHEET_ID=your-glenna-sheet-id
 ```
 
 The private key must be pasted exactly as it appears in the JSON file
-(quotes included, `\n` left as literal characters — don't convert them to
-real line breaks in this file).
+(quotes included, `\n` left as literal characters).
 
 ---
 
-## 3. Deploy to Vercel
+## 3. Connect email (Resend)
 
-1. Push this project to a GitHub repo, then import it into Vercel
-   (or run `vercel` from this folder if you have the CLI).
-2. In the Vercel project → **Settings → Environment Variables**, add the
-   same three variables from `.env.local`:
-   - `GOOGLE_SHEET_ID`
-   - `GOOGLE_SERVICE_ACCOUNT_EMAIL`
-   - `GOOGLE_PRIVATE_KEY`
-3. Deploy. Visit `your-project.vercel.app/rsvp`.
+Both clients share one sender identity; each has its own owner inbox.
 
-Every submitted RSVP will now appear as a new row in the Google Sheet
-within a second or two.
+1. Create a free account at [resend.com](https://resend.com) and verify a sending domain (or use their test domain while developing).
+2. **API Keys** → create one → this is `RESEND_API_KEY`.
+3. Set the following:
+
+```
+RESEND_API_KEY=re_your_key
+EMAIL_FROM="RSVPs <rsvp@yourdomain.com>"
+MAYET_OWNER_EMAIL=mayet-owner@example.com
+GLENNA_OWNER_EMAIL=glenna-owner@example.com
+```
+
+If `RESEND_API_KEY` or `EMAIL_FROM` is missing, the app still saves to
+the sheet — it just skips emails and logs a warning. Email is
+best-effort and never blocks a successful RSVP.
 
 ---
 
-## Event details
+## 4. Deploy to Vercel
 
-- **Honoree:** Mayet Sumagaysay
-- **Date:** Thursday, November 19, 2026, 6:00 PM
-- **Venue:** Summit Hotel
-- **RSVP by:** November 5, 2026
+1. Push this project to a GitHub repo, then import it into Vercel.
+2. In **Settings → Environment Variables**, add all nine variables from
+   `.env.local`:
+   `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`,
+   `MAYET_GOOGLE_SHEET_ID`, `GLENNA_GOOGLE_SHEET_ID`,
+   `RESEND_API_KEY`, `EMAIL_FROM`,
+   `MAYET_OWNER_EMAIL`, `GLENNA_OWNER_EMAIL`.
+3. Deploy. Visit `your-project.vercel.app/mayet` or `/glenna`.
 
-To change any of these, edit the `EVENT` object near the top of
-`app/rsvp/page.tsx`.
+Every submitted RSVP appears as a new row in the right sheet within a
+second or two, and both the guest and the event owner get an email.
+
+---
 
 ## Fonts
 
-Fonts are loaded via `app/fonts.ts` using Next.js's built-in `next/font/google`,
-not a CSS `@import`. This self-hosts the font files at build time so the
-browser never makes a separate request to fonts.googleapis.com — which
-avoids the "flash of unstyled text" (page renders in a fallback font,
-then visibly reflows once the real font arrives) that a CSS `@import`
-causes. If you add a new font to a design, add it in `app/fonts.ts`
-rather than importing it directly in the page.
-
-## Design notes
-
-- Palette: warm ivory background (`#FBF3E7`) with a garden accent set —
-  burnt orange (`#E15505`), coral pink (`#F94063`), marigold (`#FFA82C`),
-  and olive gold (`#A39814`) — over warm umber text (`#4A2E17`).
-- Display type is Cormorant Garamond; labels use tracked small-caps-style
-  Jost.
-- The signature element is a garland of small flowers in the four palette
-  colors, ringing "65" in the hero.
+Fonts are loaded via `app/fonts.ts` using Next.js's built-in
+`next/font/google` (self-hosted at build time, no runtime request to
+fonts.googleapis.com, no flash of unstyled text). If you add a new font
+for a design, add it in `app/fonts.ts` rather than importing it directly
+in a page.
 
 ## Troubleshooting
 
-- **"Server is not configured to receive RSVPs yet"** — one or more of the
-  three environment variables is missing or misspelled. Double check them
-  in Vercel's dashboard.
-- **403 / permission error in the logs** — the sheet hasn't been shared
-  with the service account's `client_email`, or it was only given Viewer
-  instead of Editor access.
-- **Private key errors** — usually caused by the `\n` characters getting
-  converted to real newlines when copy-pasting. Keep it as one single-line
-  string with literal `\n`.
+- **"Server is not configured to receive RSVPs yet" / 500 on submit** —
+  one of the Sheets env vars is missing or misspelled for that client.
+- **403 / permission error in the logs** — the relevant sheet hasn't
+  been shared with the service account's `client_email`, or was only
+  given Viewer instead of Editor access.
+- **Private key errors** — usually the `\n` characters getting converted
+  to real newlines when copy-pasting. Keep it one single-line string
+  with literal `\n`.
+- **RSVP saves but no emails arrive** — check `RESEND_API_KEY`,
+  `EMAIL_FROM` (must be a verified sender/domain in Resend), and the
+  relevant `*_OWNER_EMAIL`. Check server logs for a warning naming which
+  one is missing.
+
+## Event details
+
+- **Mayet:** edit `app/mayet/lib/event.ts`.
+- **Glenna:** edit `app/glenna/lib/event.ts`.

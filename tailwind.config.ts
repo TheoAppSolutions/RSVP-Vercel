@@ -1,28 +1,41 @@
 import type { Config } from "tailwindcss";
+import { SHELL_COLORS, GLENNA_COLORS } from "./lib/colors";
+
+// -----------------------------------------------------------------------
+// All color values here come from lib/colors.ts (the single source of
+// truth) — nothing is hard-coded twice. Mayet's designs don't use
+// Tailwind for color (they use CSS custom properties via styled-jsx —
+// see app/mayet/constants.ts), so only the shell + Glenna tokens are
+// registered here.
+// -----------------------------------------------------------------------
 
 const config: Config = {
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
+        // --- Shared app shell (root + both clients' picker pages) ---
+        // --- Glenna's own design pages also use this "denim" scale ---
         denim: {
-          50: "#eef3f8",
-          100: "#dbe6f0",
-          200: "#b3cbe0",
-          300: "#8bafd0",
-          400: "#5e8dba",
-          500: "#3d6a9a",
-          600: "#2f527a",
-          700: "#243e5c",
-          800: "#1b2e45",
-          900: "#0e1a2b",
+          50: GLENNA_COLORS.denim50,
+          100: GLENNA_COLORS.denim100,
+          200: GLENNA_COLORS.denim200,
+          300: GLENNA_COLORS.denim300,
+          400: GLENNA_COLORS.denim400,
+          500: GLENNA_COLORS.denim500,
+          600: GLENNA_COLORS.denim600,
+          700: GLENNA_COLORS.denim700,
+          800: GLENNA_COLORS.denim800,
+          900: SHELL_COLORS.denim900, // same value as GLENNA_COLORS.denim900 — shell + Glenna share this shade
         },
+        rhinestone: SHELL_COLORS.rhinestone, // same value as GLENNA_COLORS.rhinestone
+
+        // --- Glenna only: "Sapphire Soirée" design ---
         sapphire: {
-          950: "#081326",
-          900: "#0b1e3d",
-          800: "#122a4f",
+          950: GLENNA_COLORS.sapphire950,
+          900: GLENNA_COLORS.sapphire900,
+          800: GLENNA_COLORS.sapphire800,
         },
-        rhinestone: "#e8ecf1",
       },
       fontFamily: {
         script: ["var(--font-script)"],

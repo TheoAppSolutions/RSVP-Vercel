@@ -1,15 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { EVENT } from "../constants";
 import type { Attendance } from "@/app/mayet/lib/event";
 
 // -----------------------------------------------------------------------
 // Mayet-scoped RSVP form.
-// Self-contained: uses the /api/rsvp/mayet endpoint and hard-codes
-// Mayet-specific copy (reply date, message label, success text).
-// Accepts a `formPrefix` prop so element IDs are unique when multiple
-// forms appear on the same page.
+// Self-contained: posts to /api/rsvp/mayet and hard-codes Mayet-specific
+// copy (reply date, message label, success text). Accepts a `formPrefix`
+// prop so element IDs are unique when multiple forms appear on the same
+// page. The wire payload ({name, email, attending, guests, message})
+// matches the shared handler in lib/rsvp/ — see app/glenna's RSVPForm
+// for the same contract with different markup/styling.
 // -----------------------------------------------------------------------
 
 type Props = {
@@ -18,6 +19,7 @@ type Props = {
 
 export default function RSVPForm({ formPrefix = "mayet" }: Props) {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [attendance, setAttendance] = useState<Attendance>("");
   const [guests, setGuests] = useState("1");
   const [message, setMessage] = useState("");
@@ -31,7 +33,13 @@ export default function RSVPForm({ formPrefix = "mayet" }: Props) {
       const res = await fetch("/api/rsvp/mayet", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, attendance, guests, message }),
+        body: JSON.stringify({
+          name,
+          email: email || undefined,
+          attending: attendance === "joyfully-accepts" ? "yes" : "no",
+          guests,
+          message,
+        }),
       });
       if (!res.ok) throw new Error("Request failed");
       setStatus("sent");
@@ -59,6 +67,17 @@ export default function RSVPForm({ formPrefix = "mayet" }: Props) {
           onChange={(e) => setName(e.target.value)}
           placeholder="Your name"
           required
+        />
+      </div>
+
+      <div className="field">
+        <label htmlFor={`${formPrefix}-email`}>Email (optional)</label>
+        <input
+          id={`${formPrefix}-email`}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
         />
       </div>
 

@@ -1,595 +1,88 @@
-'use client';
+import RSVPForm, { RSVPTheme } from "@/components/RSVPForm";
+import { EVENT } from "@/lib/event";
 
-import { useState } from 'react';
-import { EVENT, PALETTE, type Attendance } from '@/lib/event';
-import { playfair, jost } from '../fonts';
+const theme: RSVPTheme = {
+  label: "block font-work text-xs uppercase tracking-widest text-denim-700 mb-1.5",
+  input:
+    "w-full rounded-none border-2 border-denim-800 bg-white px-4 py-3 text-denim-900 placeholder:text-denim-400 outline-none focus:bg-denim-50 transition-colors",
+  fieldset: "space-y-2",
+  radioWrap: "flex gap-3",
+  radioActive: "flex-1 border-2 border-denim-800 bg-denim-800 px-4 py-3 text-sm font-work font-semibold text-white",
+  radioInactive:
+    "flex-1 border-2 border-denim-800 bg-white px-4 py-3 text-sm font-work font-semibold text-denim-800 hover:bg-denim-50",
+  button:
+    "bg-denim-800 py-4 font-bebas text-2xl tracking-wide text-white hover:bg-denim-900 transition-colors",
+  helper: "text-xs text-denim-500 font-work",
+  success: "border-2 border-denim-800 bg-white p-8 text-denim-900",
+  error: "text-sm text-rose-600",
+};
 
-// -----------------------------------------------------------------------
-// DESIGN 3 — "Botanical Frame"
-// Event data, attendance type, and color palette now live in
-// lib/event.ts and are shared across every design (rsvp, rsvp2, rsvp3).
-// Styled as a symmetric, romantic invitation: corner leaf sprigs framing
-// the card, a large translucent "65" watermark behind the name, and a
-// soft guest-book style RSVP form.
-// Display face: 'Playfair Display' italic — a softer, more romantic serif
-// than the main page's Cormorant, paired with the same watermark warmth.
-// -----------------------------------------------------------------------
-
-const SPRIG_COLORS = [PALETTE.burnt, PALETTE.coral, PALETTE.marigold, PALETTE.olive];
-
-function LeafSprig({ rotate }: { rotate: number }) {
+export default function Design3() {
   return (
-    <svg
-      viewBox="0 0 90 90"
-      width="90"
-      height="90"
-      fill="none"
-      style={{ transform: `rotate(${rotate}deg)` }}
-      aria-hidden="true"
-    >
-      <path d="M4 4 C 30 10, 40 30, 42 42" stroke="var(--olive)" strokeWidth="1.4" fill="none" />
-      {[
-        [10, 10, 0],
-        [18, 18, 1],
-        [26, 24, 2],
-        [33, 32, 3],
-        [15, 24, 1],
-        [24, 34, 0],
-      ].map(([x, y, ci], i) => (
-        <ellipse
-          key={i}
-          cx={x}
-          cy={y}
-          rx="7"
-          ry="4"
-          fill={SPRIG_COLORS[ci as number]}
-          opacity="0.85"
-          transform={`rotate(${35 + i * 12} ${x} ${y})`}
-        />
-      ))}
-    </svg>
-  );
-}
-
-export default function FrameDesign() {
-  const [name, setName] = useState('');
-  const [attendance, setAttendance] = useState<Attendance>('');
-  const [guests, setGuests] = useState('1');
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!name.trim() || !attendance) return;
-    setStatus('sending');
-    try {
-      const res = await fetch('/api/rsvp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, attendance, guests, message }),
-      });
-      if (!res.ok) throw new Error('Request failed');
-      setStatus('sent');
-    } catch {
-      setStatus('error');
-    }
-  }
-
-  return (
-    <div className={`page ${playfair.variable} ${jost.variable}`}>
-      <style jsx global>{`
-        :root {
-          --cream: ${PALETTE.cream};
-          /* This design keeps a slightly warmer local "panel" shade than
-             the shared PALETTE.panel — intentional, not an oversight. */
-          --panel: #fffdf9;
-          --ink: ${PALETTE.ink};
-          --sage: ${PALETTE.sage};
-          --burnt: ${PALETTE.burnt};
-          --coral: ${PALETTE.coral};
-          --marigold: ${PALETTE.marigold};
-          --olive: ${PALETTE.olive};
-        }
-        * {
-          box-sizing: border-box;
-        }
-        body {
-          margin: 0;
-        }
-      `}</style>
-
-      <style jsx>{`
-        .page {
-          min-height: 100vh;
-          background: var(--cream);
-          color: var(--ink);
-          font-family: var(--font-jost), sans-serif;
-          font-weight: 300;
-          display: flex;
-          justify-content: center;
-          padding: 56px 16px 96px;
-        }
-
-        .frame {
-          position: relative;
-          width: 100%;
-          max-width: 600px;
-          background: var(--panel);
-          border: 1px solid rgba(163, 152, 20, 0.25);
-          border-radius: 4px;
-          padding: 56px 40px 44px;
-          box-shadow: 0 24px 50px -28px rgba(74, 46, 23, 0.3);
-          animation: rise 500ms ease-out both;
-          overflow: hidden;
-        }
-
-        @keyframes rise {
-          from {
-            opacity: 0;
-            transform: translateY(6px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .frame {
-            animation: none;
-          }
-        }
-
-        .corner {
-          position: absolute;
-          opacity: 0.9;
-        }
-        .corner.tl {
-          top: -6px;
-          left: -6px;
-        }
-        .corner.tr {
-          top: -6px;
-          right: -6px;
-        }
-        .corner.bl {
-          bottom: -6px;
-          left: -6px;
-        }
-        .corner.br {
-          bottom: -6px;
-          right: -6px;
-        }
-
-        .watermark {
-          position: absolute;
-          top: 38%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          font-family: var(--font-playfair), serif;
-          font-weight: 600;
-          font-size: 260px;
-          color: var(--burnt);
-          opacity: 0.06;
-          pointer-events: none;
-          user-select: none;
-          line-height: 1;
-        }
-
-        .content {
-          position: relative;
-          text-align: center;
-        }
-
-        .hero-photo {
-          width: 108px;
-          height: 108px;
-          border-radius: 50%;
-          overflow: hidden;
-          margin: 0 auto 22px;
-          border: 2px solid var(--marigold);
-          box-shadow: 0 8px 20px -10px rgba(74, 46, 23, 0.4);
-        }
-        .hero-photo img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
-
-        .eyebrow {
-          font-size: 11px;
-          letter-spacing: 0.35em;
-          text-transform: uppercase;
-          color: var(--olive);
-          margin: 0 0 18px;
-        }
-
-        .name {
-          font-family: var(--font-playfair), serif;
-          font-style: italic;
-          font-weight: 600;
-          font-size: 42px;
-          line-height: 1.15;
-          margin: 0 0 6px;
-          color: var(--burnt);
-        }
-
-        .celebrates {
-          font-size: 12px;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          color: var(--sage);
-          margin: 0 0 30px;
-        }
-
-        .invite-line {
-          font-family: var(--font-playfair), serif;
-          font-style: italic;
-          font-size: 17px;
-          line-height: 1.75;
-          max-width: 400px;
-          margin: 0 auto 34px;
-        }
-
-        .divider-flower {
-          text-align: center;
-          color: var(--coral);
-          font-size: 14px;
-          margin: 0 0 30px;
-        }
-
-        .detail-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 18px;
-          margin-bottom: 30px;
-        }
-        .detail-row .label {
-          font-size: 10px;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: var(--olive);
-          margin: 0 0 6px;
-        }
-        .detail-row .value {
-          font-family: var(--font-playfair), serif;
-          font-weight: 500;
-          font-size: 16px;
-          margin: 0;
-        }
-        .detail-row .value span {
-          display: block;
-          font-family: var(--font-jost), sans-serif;
-          font-size: 12px;
-          font-weight: 300;
-          color: var(--sage);
-          margin-top: 2px;
-        }
-
-        .map-frame {
-          margin: 0 auto 30px;
-          max-width: 440px;
-          border-radius: 6px;
-          overflow: hidden;
-          border: 1px solid rgba(163, 152, 20, 0.22);
-        }
-        .map-frame iframe {
-          width: 100%;
-          height: 190px;
-          border: 0;
-          display: block;
-        }
-
-        .attire-gallery {
-          display: flex;
-          justify-content: center;
-          gap: 12px;
-          margin: 0 auto 8px;
-        }
-        .attire-gallery img {
-          width: 88px;
-          height: 116px;
-          object-fit: cover;
-          border-radius: 50% 50% 6px 6px;
-          border: 1px solid rgba(163, 152, 20, 0.25);
-        }
-
-        .attire-label {
-          font-size: 11px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: var(--sage);
-          margin: 10px 0 36px;
-        }
-
-        /* ---------- RSVP ---------- */
-
-        .form-wrap {
-          background: var(--cream);
-          border-radius: 10px;
-          padding: 32px 26px;
-          text-align: left;
-        }
-
-        .form-title {
-          font-family: var(--font-playfair), serif;
-          font-style: italic;
-          font-size: 22px;
-          text-align: center;
-          margin: 0 0 4px;
-          color: var(--burnt);
-        }
-        .form-sub {
-          text-align: center;
-          font-size: 12px;
-          color: var(--sage);
-          margin: 0 0 24px;
-        }
-
-        .field {
-          margin-bottom: 16px;
-        }
-        .field label {
-          display: block;
-          font-size: 10px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: var(--olive);
-          margin-bottom: 7px;
-        }
-        .field input[type='text'],
-        .field textarea,
-        .field select {
-          width: 100%;
-          background: var(--panel);
-          border: 1px solid rgba(163, 152, 20, 0.3);
-          border-radius: 999px;
-          color: var(--ink);
-          font-family: var(--font-jost), sans-serif;
-          font-weight: 300;
-          font-size: 14px;
-          padding: 11px 18px;
-          outline: none;
-        }
-        .field textarea {
-          border-radius: 16px;
-          min-height: 60px;
-          resize: vertical;
-        }
-        .field input:focus,
-        .field textarea:focus,
-        .field select:focus {
-          border-color: var(--burnt);
-        }
-
-        .attend-options {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-        }
-        .attend-btn {
-          border: 1px solid rgba(163, 152, 20, 0.3);
-          background: var(--panel);
-          color: var(--sage);
-          font-size: 12px;
-          padding: 11px 8px;
-          border-radius: 999px;
-          cursor: pointer;
-        }
-        .attend-btn.active {
-          background: var(--coral);
-          border-color: var(--coral);
-          color: #fff9ef;
-        }
-
-        .submit-btn {
-          width: 100%;
-          margin-top: 6px;
-          background: var(--burnt);
-          color: #fff9ef;
-          border: none;
-          border-radius: 999px;
-          font-weight: 500;
-          font-size: 12px;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          padding: 14px;
-          cursor: pointer;
-        }
-        .submit-btn:hover:not(:disabled) {
-          background: var(--coral);
-        }
-        .submit-btn:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-
-        .status-msg {
-          text-align: center;
-          font-family: var(--font-playfair), serif;
-          font-style: italic;
-          font-size: 14px;
-          color: var(--burnt);
-          margin-top: 14px;
-        }
-        .status-msg.error {
-          color: var(--coral);
-        }
-
-        @media (max-width: 480px) {
-          .frame {
-            padding: 44px 20px 32px;
-          }
-          .name {
-            font-size: 32px;
-          }
-          .watermark {
-            font-size: 170px;
-          }
-          .detail-row {
-            grid-template-columns: 1fr;
-            gap: 20px;
-          }
-        }
-      `}</style>
-
-      <div className="frame">
-        <div className="corner tl">
-          <LeafSprig rotate={0} />
-        </div>
-        <div className="corner tr">
-          <LeafSprig rotate={90} />
-        </div>
-        <div className="corner bl">
-          <LeafSprig rotate={-90} />
-        </div>
-        <div className="corner br">
-          <LeafSprig rotate={180} />
-        </div>
-
-        <span className="watermark">{EVENT.age}</span>
-
-        <div className="content">
-          <div className="hero-photo">
-            <img
-              src="https://placehold.co/220x220/FFA82C/4A2E17?text=Photo"
-              alt="Placeholder photo of Mayet Sumagaysay — replace with an actual photo"
-            />
-          </div>
-
-          <p className="eyebrow">Together with joyful hearts</p>
-          <h1 className="name">{EVENT.name}</h1>
-          <p className="celebrates">celebrates her {EVENT.age}th birthday</p>
-
-          <p className="invite-line">
-            A garden evening of soft blooms and warm company, in honor of a
-            life beautifully lived. We would be delighted to have you join us.
+    <main className="min-h-screen bg-denim-50 text-denim-900">
+      {/* Torn header panel */}
+      <div className="relative bg-denim-800 pb-20 pt-14 text-white sm:pb-28">
+        <div className="mx-auto max-w-4xl px-6">
+          <p className="font-work text-xs uppercase tracking-[0.3em] text-denim-200/70">Save the date</p>
+          <h1 className="mt-3 font-bebas text-7xl leading-[0.9] tracking-wide sm:text-8xl md:text-9xl">
+            GLENNA&rsquo;S<br />65TH
+          </h1>
+          <p className="mt-4 max-w-md font-work text-denim-100/85">
+            Join us for an evening of Denim &amp; Diamonds — pull on your boots, bring your bling.
           </p>
+        </div>
+        {/* torn bottom edge */}
+        <svg
+          className="absolute -bottom-1 left-0 w-full text-denim-50"
+          viewBox="0 0 1200 40"
+          preserveAspectRatio="none"
+          fill="currentColor"
+        >
+          <path d="M0,20 L40,8 L85,26 L130,4 L175,22 L220,10 L265,30 L310,6 L355,24 L400,12 L445,28 L490,8 L535,22 L580,4 L625,26 L670,10 L715,30 L760,6 L805,24 L850,14 L895,28 L940,8 L985,22 L1030,4 L1075,26 L1120,10 L1165,30 L1200,16 L1200,40 L0,40 Z" />
+        </svg>
+      </div>
 
-          <p className="divider-flower">✿ ✿ ✿</p>
-
-          <div className="detail-row">
-            <div>
-              <p className="label">Date</p>
-              <p className="value">
-                Nov 19
-                <span>2026</span>
-              </p>
+      <section className="mx-auto grid max-w-4xl grid-cols-1 gap-12 px-6 py-16 sm:grid-cols-5">
+        {/* Details column */}
+        <div className="sm:col-span-2">
+          <h2 className="font-bebas text-3xl tracking-wide text-denim-800">Details</h2>
+          <dl className="mt-6 space-y-5 font-work">
+            <div className="border-l-2 border-denim-800 pl-4">
+              <dt className="text-xs uppercase tracking-widest text-denim-500">Date</dt>
+              <dd className="text-lg font-semibold">{EVENT.date}</dd>
             </div>
-            <div>
-              <p className="label">Time</p>
-              <p className="value">
-                {EVENT.time}
-                <span>onwards</span>
-              </p>
+            <div className="border-l-2 border-denim-800 pl-4">
+              <dt className="text-xs uppercase tracking-widest text-denim-500">Time</dt>
+              <dd className="text-lg font-semibold">{EVENT.time}</dd>
             </div>
-            <div>
-              <p className="label">Venue</p>
-              <p className="value">
-                {EVENT.venue}
-                <span>garden formal</span>
-              </p>
+            <div className="border-l-2 border-denim-800 pl-4">
+              <dt className="text-xs uppercase tracking-widest text-denim-500">Venue</dt>
+              <dd className="text-lg font-semibold">{EVENT.venue}</dd>
             </div>
-          </div>
+            <div className="border-l-2 border-denim-800 pl-4">
+              <dt className="text-xs uppercase tracking-widest text-denim-500">Dress code</dt>
+              <dd className="text-lg font-semibold">{EVENT.dressCode}</dd>
+            </div>
+          </dl>
 
-          <div className="map-frame">
-            <iframe
-              src={`https://www.google.com/maps?q=${encodeURIComponent(
-                EVENT.mapQuery
-              )}&output=embed`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title={`Map to ${EVENT.venue}`}
-            />
-          </div>
-
-          <div className="attire-gallery">
-            <img src="https://placehold.co/200x260/F94063/FFF9EF?text=Attire" alt="Attire inspiration placeholder" />
-            <img src="https://placehold.co/200x260/A39814/FFF9EF?text=Attire" alt="Attire inspiration placeholder" />
-          </div>
-          <p className="attire-label">Garden Formal — florals &amp; warm hues</p>
-
-          <div className="form-wrap">
-            <h2 className="form-title">Kindly Respond</h2>
-            <p className="form-sub">We hope to hear from you by {EVENT.rsvpBy}</p>
-
-            {status === 'sent' ? (
-              <p className="status-msg">
-                Thank you, {name.split(' ')[0] || 'friend'}. We can&apos;t wait to celebrate with you.
-              </p>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="field">
-                  <label htmlFor="f-name">Full Name</label>
-                  <input
-                    id="f-name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
-
-                <div className="field">
-                  <label>Will you attend?</label>
-                  <div className="attend-options">
-                    <button
-                      type="button"
-                      className={`attend-btn ${attendance === 'joyfully-accepts' ? 'active' : ''}`}
-                      onClick={() => setAttendance('joyfully-accepts')}
-                    >
-                      Joyfully accepts
-                    </button>
-                    <button
-                      type="button"
-                      className={`attend-btn ${attendance === 'regretfully-declines' ? 'active' : ''}`}
-                      onClick={() => setAttendance('regretfully-declines')}
-                    >
-                      Regretfully declines
-                    </button>
-                  </div>
-                </div>
-
-                {attendance === 'joyfully-accepts' && (
-                  <div className="field">
-                    <label htmlFor="f-guests">Number of Guests</label>
-                    <select id="f-guests" value={guests} onChange={(e) => setGuests(e.target.value)}>
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <option key={n} value={n}>
-                          {n}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-
-                <div className="field">
-                  <label htmlFor="f-message">Message for Mayet (optional)</label>
-                  <textarea
-                    id="f-message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Leave a warm note..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="submit-btn"
-                  disabled={status === 'sending' || !name.trim() || !attendance}
-                >
-                  {status === 'sending' ? 'Sending…' : 'Send RSVP'}
-                </button>
-
-                {status === 'error' && (
-                  <p className="status-msg error">Something went wrong — please try again.</p>
-                )}
-              </form>
-            )}
+          <div className="mt-8 flex flex-wrap gap-2">
+            {["Denim", "Rhinestones", "Cowboy boots", "Sparkle"].map((tag) => (
+              <span key={tag} className="border border-denim-300 bg-white px-3 py-1 font-work text-xs uppercase tracking-wide text-denim-600">
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
-      </div>
-    </div>
+
+        {/* Form column */}
+        <div className="sm:col-span-3">
+          <div className="border-2 border-denim-800 bg-white p-7 sm:p-9">
+            <h2 className="font-bebas text-3xl tracking-wide text-denim-800">RSVP</h2>
+            <p className="mb-6 mt-1 font-work text-sm text-denim-500">Kindly reply by {EVENT.rsvpBy}.</p>
+            <RSVPForm theme={theme} />
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

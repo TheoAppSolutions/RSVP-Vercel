@@ -3,18 +3,18 @@ import Link from "next/link";
 const designs = [
   {
     href: "/design-1",
-    name: "Botanical Garland",
-    desc: "'Cormorant Garamond' — soft, romantic serif for a garden party. Body / label face: 'Jost' — light, wide-tracked for small caps labels.",
+    name: "Rhinestone Ranch",
+    desc: "Western-glam: dark denim, cursive script, star badge.",
   },
   {
     href: "/design-2",
-    name: "Garden Ticket",
-    desc: "'Fraunces' — a bolder, more graphic serif than the main page's Cormorant, for a distinct editorial-ticket feel.",
+    name: "Sapphire Soirée",
+    desc: "Elegant midnight gala with diamond-facet dividers.",
   },
   {
     href: "/design-3",
-    name: "Botanical Frame",
-    desc: "'Playfair Display' italic — a softer, more romantic serif than the main page's Cormorant, paired with the same watermark warmth.",
+    name: "Denim Edit",
+    desc: "Bold editorial layout with a torn-denim panel.",
   },
 ];
 
@@ -23,7 +23,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-denim-900 px-6 py-20 text-denim-50">
       <p className="font-oswald text-xs uppercase tracking-[0.3em] text-denim-200/60">Preview</p>
       <h1 className="mt-3 text-center font-script text-5xl text-rhinestone">
-        Mayet&rsquo;s 65th — Design Samples
+        Glenna&rsquo;s 65th — Design Samples
       </h1>
       <div className="mt-12 grid w-full max-w-3xl gap-6 sm:grid-cols-3">
         {designs.map((d) => (

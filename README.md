@@ -1,172 +1,51 @@
-# Mayet's 65th Birthday — RSVP Site
+# Glenna's 65th — Denim & Diamonds RSVP
 
-A small Next.js app with one page (`/rsvp`) — a garden-themed invitation
-with an RSVP form that saves responses to a Google Sheet.
+Next.js 14 (App Router) + Tailwind CSS site with three complete visual designs
+for the same RSVP form and event details. Visit `/` to browse all three, or
+go straight to `/design-1`, `/design-2`, `/design-3`.
 
-## What's inside
+- **Design 1 — Rhinestone Ranch**: dark denim, cursive script headline, star badge.
+- **Design 2 — Sapphire Soirée**: elegant midnight-navy gala, diamond-facet dividers.
+- **Design 3 — Denim Edit**: bold editorial layout, torn-denim panel.
 
-```
-app/
-  layout.tsx        Root layout + page title
-  page.tsx           Redirects "/" to "/rsvp"
-  rsvp/page.tsx       Design 1 — "Botanical Garland" (wreath medallion, single card)
-  rsvp2/page.tsx      Design 2 — "Garden Ticket" (event-ticket stub layout)
-  rsvp3/page.tsx      Design 3 — "Botanical Frame" (symmetric, corner leaf sprigs, "65" watermark)
-  api/rsvp/route.ts   API route: writes each RSVP to Google Sheets
-lib/
-  event.ts            Shared event details, attendance type, and color
-                       palette — imported by every design above. Edit
-                       here once and it updates all three pages.
-package.json
-next.config.mjs
-tsconfig.json
-.env.example          Template for the required environment variables
-```
+Event details live in one place: `lib/event.ts`. Edit that file to change the
+date, time, venue, or RSVP deadline everywhere at once.
 
-All three designs import the same data from `lib/event.ts` — the event
-name/date/time/venue, the RSVP form's attendance type, and the garden
-color palette (burnt orange, coral pink, marigold, olive gold). Change
-the date, venue, or any color there once and it updates `/rsvp`, `/rsvp2`,
-and `/rsvp3` together. A couple of pages keep one small local override on
-top of the shared palette (e.g. `/rsvp3` uses a slightly warmer white for
-its card background) — those are called out with a comment right above
-the override so they're easy to find if you want to unify them too.
-
-All three pages post to the same `/api/rsvp` route, so the Google Sheets
-setup below only needs to be done once no matter how many designs you
-keep.
-
-Styling is done with `styled-jsx`, which ships with Next.js — there's
-nothing extra to install for the design itself.
-
----
-
-## 1. Run it locally
+## Run locally
 
 ```bash
 npm install
-cp .env.example .env.local   # then fill in the three values (see step 2)
 npm run dev
 ```
 
-Visit `http://localhost:3000` — it will redirect to `/rsvp`.
+Then open http://localhost:3000
 
----
+## Deploy to Vercel
 
-## 2. Connect it to a Google Sheet
+1. Push this folder to a GitHub repo.
+2. Go to https://vercel.com/new and import the repo.
+3. Framework preset auto-detects as Next.js — no config needed.
+4. Click **Deploy**.
 
-The form won't save anywhere until you complete this one-time setup
-(about 10 minutes).
+Or with the Vercel CLI:
 
-### a) Create the sheet
-
-Create a new Google Sheet. In row 1, add these headers:
-
-```
-Name | Attendance | Guests | Message | Submitted At
-```
-
-Copy the **Sheet ID** out of its URL:
-
-```
-https://docs.google.com/spreadsheets/d/THIS_PART_IS_THE_ID/edit
+```bash
+npm i -g vercel
+vercel
 ```
 
-### b) Create a Google Cloud service account
+## Making RSVPs stick
 
-A service account is a robot Google identity that can write to the sheet
-without needing your personal login.
+Right now `app/api/rsvp/route.ts` validates a submission and logs it, but
+Vercel's serverless functions don't have persistent disk storage — so
+submissions aren't saved anywhere durable yet. Before the real event, wire
+that route up to one of:
 
-1. Go to [console.cloud.google.com](https://console.cloud.google.com/) and
-   create a project (or use an existing one).
-2. In the search bar, go to **APIs & Services → Library**, search for
-   **Google Sheets API**, and click **Enable**.
-3. Go to **APIs & Services → Credentials → Create Credentials → Service
-   account**. Give it any name (e.g. `rsvp-writer`) and finish the wizard.
-4. Open the service account you just created → **Keys** tab → **Add Key →
-   Create new key → JSON**. This downloads a `.json` file — keep it safe,
-   don't commit it to git.
-5. Open that JSON file. You need two fields from it:
-   - `client_email`
-   - `private_key`
+- **Vercel Postgres / Supabase** — a proper database, a bit more setup.
+- **Airtable** — quick to set up, gives you a spreadsheet-like view of RSVPs.
+- **Google Sheets** (via a connector like SheetDB or a Google Apps Script
+  webhook) — easiest if you already live in Sheets.
+- **Resend or Formspree** — simplest option if you just want an email each
+  time someone RSVPs, no dashboard needed.
 
-### c) Share the sheet with the service account
-
-Back in your Google Sheet, click **Share**, and paste in the
-`client_email` address from the JSON file (it looks like
-`rsvp-writer@your-project.iam.gserviceaccount.com`). Give it **Editor**
-access.
-
-### d) Set the environment variables
-
-Locally, put these in `.env.local`:
-
-```
-GOOGLE_SHEET_ID=your-sheet-id
-GOOGLE_SERVICE_ACCOUNT_EMAIL=rsvp-writer@your-project.iam.gserviceaccount.com
-GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvQ...\n-----END PRIVATE KEY-----\n"
-```
-
-The private key must be pasted exactly as it appears in the JSON file
-(quotes included, `\n` left as literal characters — don't convert them to
-real line breaks in this file).
-
----
-
-## 3. Deploy to Vercel
-
-1. Push this project to a GitHub repo, then import it into Vercel
-   (or run `vercel` from this folder if you have the CLI).
-2. In the Vercel project → **Settings → Environment Variables**, add the
-   same three variables from `.env.local`:
-   - `GOOGLE_SHEET_ID`
-   - `GOOGLE_SERVICE_ACCOUNT_EMAIL`
-   - `GOOGLE_PRIVATE_KEY`
-3. Deploy. Visit `your-project.vercel.app/rsvp`.
-
-Every submitted RSVP will now appear as a new row in the Google Sheet
-within a second or two.
-
----
-
-## Event details
-
-- **Honoree:** Mayet Sumagaysay
-- **Date:** Thursday, November 19, 2026, 6:00 PM
-- **Venue:** Summit Hotel
-- **RSVP by:** November 5, 2026
-
-To change any of these, edit the `EVENT` object near the top of
-`app/rsvp/page.tsx`.
-
-## Fonts
-
-Fonts are loaded via `app/fonts.ts` using Next.js's built-in `next/font/google`,
-not a CSS `@import`. This self-hosts the font files at build time so the
-browser never makes a separate request to fonts.googleapis.com — which
-avoids the "flash of unstyled text" (page renders in a fallback font,
-then visibly reflows once the real font arrives) that a CSS `@import`
-causes. If you add a new font to a design, add it in `app/fonts.ts`
-rather than importing it directly in the page.
-
-## Design notes
-
-- Palette: warm ivory background (`#FBF3E7`) with a garden accent set —
-  burnt orange (`#E15505`), coral pink (`#F94063`), marigold (`#FFA82C`),
-  and olive gold (`#A39814`) — over warm umber text (`#4A2E17`).
-- Display type is Cormorant Garamond; labels use tracked small-caps-style
-  Jost.
-- The signature element is a garland of small flowers in the four palette
-  colors, ringing "65" in the hero.
-
-## Troubleshooting
-
-- **"Server is not configured to receive RSVPs yet"** — one or more of the
-  three environment variables is missing or misspelled. Double check them
-  in Vercel's dashboard.
-- **403 / permission error in the logs** — the sheet hasn't been shared
-  with the service account's `client_email`, or it was only given Viewer
-  instead of Editor access.
-- **Private key errors** — usually caused by the `\n` characters getting
-  converted to real newlines when copy-pasting. Keep it as one single-line
-  string with literal `\n`.
+Happy to wire up whichever of these you'd like next.

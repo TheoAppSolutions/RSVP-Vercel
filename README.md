@@ -9,13 +9,32 @@ with an RSVP form that saves responses to a Google Sheet.
 app/
   layout.tsx        Root layout + page title
   page.tsx           Redirects "/" to "/rsvp"
-  rsvp/page.tsx       The invitation + RSVP form (garden theme)
+  rsvp/page.tsx       Design 1 — "Botanical Garland" (wreath medallion, single card)
+  rsvp2/page.tsx      Design 2 — "Garden Ticket" (event-ticket stub layout)
+  rsvp3/page.tsx      Design 3 — "Botanical Frame" (symmetric, corner leaf sprigs, "65" watermark)
   api/rsvp/route.ts   API route: writes each RSVP to Google Sheets
+lib/
+  event.ts            Shared event details, attendance type, and color
+                       palette — imported by every design above. Edit
+                       here once and it updates all three pages.
 package.json
 next.config.mjs
 tsconfig.json
 .env.example          Template for the required environment variables
 ```
+
+All three designs import the same data from `lib/event.ts` — the event
+name/date/time/venue, the RSVP form's attendance type, and the garden
+color palette (burnt orange, coral pink, marigold, olive gold). Change
+the date, venue, or any color there once and it updates `/rsvp`, `/rsvp2`,
+and `/rsvp3` together. A couple of pages keep one small local override on
+top of the shared palette (e.g. `/rsvp3` uses a slightly warmer white for
+its card background) — those are called out with a comment right above
+the override so they're easy to find if you want to unify them too.
+
+All three pages post to the same `/api/rsvp` route, so the Google Sheets
+setup below only needs to be done once no matter how many designs you
+keep.
 
 Styling is done with `styled-jsx`, which ships with Next.js — there's
 nothing extra to install for the design itself.

@@ -1,34 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { EVENT, PALETTE, type Attendance } from '@/lib/event';
 
 // -----------------------------------------------------------------------
-// Design tokens — garden palette pulled from the reference image
-//   cream    #FBF3E7  soft ivory paper — page background
-//   panel    #FFFFFF  card background
-//   ink      #4A2E17  warm umber — primary text
-//   sage     #8A7A57  muted olive-brown — secondary text
-//   burnt    #E15505  burnt orange — primary accent
-//   coral    #F94063  coral pink — secondary accent
-//   marigold #FFA82C  marigold — tertiary accent
-//   olive    #A39814  olive gold — quaternary accent
+// Design 1 — "Botanical Garland"
+// Event data, attendance type, and color palette now live in
+// lib/event.ts and are shared across every design (rsvp, rsvp2, rsvp3).
 // Display face: 'Cormorant Garamond' — soft, romantic serif for a garden party
 // Body / label face: 'Jost' — light, wide-tracked for small caps labels
 // -----------------------------------------------------------------------
-
-const EVENT = {
-  name: 'Mayet Sumagaysay',
-  age: '65',
-  date: 'Thursday, November 19, 2026',
-  time: '6:00 in the evening',
-  venue: 'Summit Hotel',
-  // Used to build the embedded map below — replace with the exact address
-  // (e.g. "Summit Hotel, [Street], [City]") for a more precise pin.
-  mapQuery: 'Summit Hotel, Tacloban City',
-  rsvpBy: 'November 5, 2026',
-};
-
-type Attendance = 'joyfully-accepts' | 'regretfully-declines' | '';
 
 export default function RsvpPage() {
   const [name, setName] = useState('');
@@ -60,15 +41,15 @@ export default function RsvpPage() {
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap');
 
         :root {
-          --cream: #fbf3e7;
-          --panel: #ffffff;
+          --cream: ${PALETTE.cream};
+          --panel: ${PALETTE.panel};
           --panel-line: rgba(163, 152, 20, 0.22);
-          --ink: #4a2e17;
-          --sage: #8a7a57;
-          --burnt: #e15505;
-          --coral: #f94063;
-          --marigold: #ffa82c;
-          --olive: #a39814;
+          --ink: ${PALETTE.ink};
+          --sage: ${PALETTE.sage};
+          --burnt: ${PALETTE.burnt};
+          --coral: ${PALETTE.coral};
+          --marigold: ${PALETTE.marigold};
+          --olive: ${PALETTE.olive};
         }
 
         * {
@@ -519,7 +500,7 @@ export default function RsvpPage() {
               const r = 84;
               const cx = 100 + r * Math.cos(angle);
               const cy = 100 + r * Math.sin(angle);
-              const colors = ['#E15505', '#F94063', '#FFA82C', '#A39814'];
+              const colors = [PALETTE.burnt, PALETTE.coral, PALETTE.marigold, PALETTE.olive];
               const color = colors[i % colors.length];
               const size = i % 2 === 0 ? 6 : 4.2;
               return (

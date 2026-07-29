@@ -1,66 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-import { EVENT, PALETTE, type Attendance } from '@/lib/event';
-import { cormorant, jost } from '../fonts';
+import { EVENT, PALETTE, GLOBAL_CSS_1 } from '../constants';
+import { cormorant, jost } from '../../fonts';
+import RSVPForm from '../RSVPForm';
 
 // -----------------------------------------------------------------------
 // Design 1 — "Botanical Garland"
-// Event data, attendance type, and color palette now live in
-// lib/event.ts and are shared across every design (rsvp, rsvp2, rsvp3).
 // Display face: 'Cormorant Garamond' — soft, romantic serif for a garden party
 // Body / label face: 'Jost' — light, wide-tracked for small caps labels
 // -----------------------------------------------------------------------
 
-export default function RsvpPage() {
-  const [name, setName] = useState('');
-  const [attendance, setAttendance] = useState<Attendance>('');
-  const [guests, setGuests] = useState('1');
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!name.trim() || !attendance) return;
-    setStatus('sending');
-    try {
-      const res = await fetch('/api/rsvp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, attendance, guests, message }),
-      });
-      if (!res.ok) throw new Error('Request failed');
-      setStatus('sent');
-    } catch {
-      setStatus('error');
-    }
-  }
-
+export default function Design1() {
   return (
     <div className={`page ${cormorant.variable} ${jost.variable}`}>
-      <style jsx global>{`
-        :root {
-          --cream: ${PALETTE.cream};
-          --panel: ${PALETTE.panel};
-          --panel-line: rgba(163, 152, 20, 0.22);
-          --ink: ${PALETTE.ink};
-          --sage: ${PALETTE.sage};
-          --burnt: ${PALETTE.burnt};
-          --coral: ${PALETTE.coral};
-          --marigold: ${PALETTE.marigold};
-          --olive: ${PALETTE.olive};
-        }
+      <style>{GLOBAL_CSS_1}</style>
 
-        * {
-          box-sizing: border-box;
-        }
-
-        body {
-          margin: 0;
-        }
-      `}</style>
-
-      <style jsx>{`
+      <style>{`
         .page {
           min-height: 100vh;
           background: radial-gradient(ellipse at 50% -10%, #fff9ef 0%, var(--cream) 60%);
@@ -79,20 +34,12 @@ export default function RsvpPage() {
         }
 
         @keyframes rise {
-          from {
-            opacity: 0;
-            transform: translateY(6px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .card {
-            animation: none;
-          }
+          .card { animation: none; }
         }
 
         /* ---------- Hero ---------- */
@@ -295,9 +242,7 @@ export default function RsvpPage() {
         }
 
         @media (max-width: 420px) {
-          .attire-gallery {
-            grid-template-columns: 1fr;
-          }
+          .attire-gallery { grid-template-columns: 1fr; }
         }
 
         /* ---------- RSVP form ---------- */
@@ -326,9 +271,7 @@ export default function RsvpPage() {
           margin: 0 0 30px;
         }
 
-        .field {
-          margin-bottom: 22px;
-        }
+        .field { margin-bottom: 22px; }
 
         .field label {
           display: block;
@@ -355,16 +298,11 @@ export default function RsvpPage() {
           transition: border-color 200ms ease;
         }
 
-        .field select option {
-          background: var(--panel);
-          color: var(--ink);
-        }
+        .field select option { background: var(--panel); color: var(--ink); }
 
         .field input[type='text']:focus,
         .field textarea:focus,
-        .field select:focus {
-          border-color: var(--burnt);
-        }
+        .field select:focus { border-color: var(--burnt); }
 
         .field textarea {
           resize: vertical;
@@ -391,25 +329,8 @@ export default function RsvpPage() {
           transition: all 180ms ease;
         }
 
-        .attend-btn:hover {
-          border-color: var(--burnt);
-          color: var(--burnt);
-        }
-
-        .attend-btn.active {
-          background: rgba(225, 85, 5, 0.1);
-          border-color: var(--burnt);
-          color: var(--burnt);
-        }
-
-        .attend-btn:focus-visible,
-        .field input:focus-visible,
-        .field select:focus-visible,
-        .field textarea:focus-visible,
-        .submit-btn:focus-visible {
-          outline: 2px solid var(--coral);
-          outline-offset: 2px;
-        }
+        .attend-btn:hover { border-color: var(--burnt); color: var(--burnt); }
+        .attend-btn.active { background: rgba(225, 85, 5, 0.1); border-color: var(--burnt); color: var(--burnt); }
 
         .submit-btn {
           width: 100%;
@@ -428,14 +349,8 @@ export default function RsvpPage() {
           transition: background 180ms ease;
         }
 
-        .submit-btn:hover:not(:disabled) {
-          background: var(--coral);
-        }
-
-        .submit-btn:disabled {
-          opacity: 0.55;
-          cursor: not-allowed;
-        }
+        .submit-btn:hover:not(:disabled) { background: var(--coral); }
+        .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; }
 
         .status-msg {
           text-align: center;
@@ -445,13 +360,8 @@ export default function RsvpPage() {
           font-style: italic;
         }
 
-        .status-msg.sent {
-          color: var(--burnt);
-        }
-
-        .status-msg.error {
-          color: var(--coral);
-        }
+        .status-msg.sent  { color: var(--burnt); }
+        .status-msg.error { color: var(--coral); }
 
         .footer {
           text-align: center;
@@ -463,19 +373,14 @@ export default function RsvpPage() {
         }
 
         @media (max-width: 420px) {
-          .name {
-            font-size: 38px;
-          }
-          .form-wrap {
-            padding: 32px 20px;
-          }
+          .name { font-size: 38px; }
+          .form-wrap { padding: 32px 20px; }
         }
       `}</style>
 
       <div className="card">
         {/* Hero */}
         <div className="hero">
-          {/* Placeholder photo — swap the src for an actual photo of Mayet before launch */}
           <div className="hero-photo">
             <img
               src="https://placehold.co/300x300/FFA82C/4A2E17?text=Photo"
@@ -493,7 +398,6 @@ export default function RsvpPage() {
             role="img"
             aria-label="A ring of garden flowers in burnt orange, coral, marigold, and olive, encircling the number 65"
           >
-            {/* garland ring of small flowers using the four palette colors */}
             {Array.from({ length: 16 }).map((_, i) => {
               const angle = (i / 16) * Math.PI * 2;
               const r = 84;
@@ -504,7 +408,6 @@ export default function RsvpPage() {
               const size = i % 2 === 0 ? 6 : 4.2;
               return (
                 <g key={i}>
-                  {/* petals */}
                   {Array.from({ length: 5 }).map((_, p) => {
                     const pAngle = (p / 5) * Math.PI * 2;
                     const px = cx + size * 0.9 * Math.cos(pAngle);
@@ -526,7 +429,7 @@ export default function RsvpPage() {
                 </g>
               );
             })}
-            <circle cx="100" cy="100" r="65" fill="#FFFFFF" stroke="var(--panel-line)" strokeWidth="1" />
+            <circle cx="100" cy="100" r="65" fill="#FFFFFF" stroke="rgba(163,152,20,0.22)" strokeWidth="1" />
             <text
               x="100"
               y="118"
@@ -574,12 +477,9 @@ export default function RsvpPage() {
             </div>
           </div>
 
-          {/* Map — swap EVENT.mapQuery for the hotel's exact address for a precise pin */}
           <div className="map-frame">
             <iframe
-              src={`https://www.google.com/maps?q=${encodeURIComponent(
-                EVENT.mapQuery
-              )}&output=embed`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(EVENT.mapQuery)}&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title={`Map to ${EVENT.venue}`}
@@ -590,17 +490,11 @@ export default function RsvpPage() {
           <p className="attire-heading">Attire Inspiration</p>
           <div className="attire-gallery">
             <div className="attire-card">
-              <img
-                src="https://placehold.co/300x400/F94063/FFF9EF?text=Attire"
-                alt="Placeholder image — garden formal attire inspiration"
-              />
+              <img src="https://placehold.co/300x400/F94063/FFF9EF?text=Attire" alt="Garden formal attire inspiration" />
               <p className="attire-caption">Garden Florals</p>
             </div>
             <div className="attire-card">
-              <img
-                src="https://placehold.co/300x400/A39814/FFF9EF?text=Attire"
-                alt="Placeholder image — garden formal attire inspiration"
-              />
+              <img src="https://placehold.co/300x400/A39814/FFF9EF?text=Attire" alt="Garden formal attire inspiration" />
               <p className="attire-caption">Warm Earth Tones</p>
             </div>
           </div>
@@ -612,83 +506,7 @@ export default function RsvpPage() {
         <div className="form-wrap">
           <h2 className="form-title">Kindly Respond</h2>
           <p className="form-sub">We look forward to hearing from you by {EVENT.rsvpBy}</p>
-
-          {status === 'sent' ? (
-            <p className="status-msg sent">
-              Thank you, {name.split(' ')[0] || 'friend'}. Your response has been received with joy.
-            </p>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <div className="field">
-                <label htmlFor="name">Full Name</label>
-                <input
-                  id="name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
-                  required
-                />
-              </div>
-
-              <div className="field">
-                <label>Will you attend?</label>
-                <div className="attend-options">
-                  <button
-                    type="button"
-                    className={`attend-btn ${attendance === 'joyfully-accepts' ? 'active' : ''}`}
-                    onClick={() => setAttendance('joyfully-accepts')}
-                  >
-                    Joyfully accepts
-                  </button>
-                  <button
-                    type="button"
-                    className={`attend-btn ${attendance === 'regretfully-declines' ? 'active' : ''}`}
-                    onClick={() => setAttendance('regretfully-declines')}
-                  >
-                    Regretfully declines
-                  </button>
-                </div>
-              </div>
-
-              {attendance === 'joyfully-accepts' && (
-                <div className="field">
-                  <label htmlFor="guests">Number of Guests (including yourself)</label>
-                  <select id="guests" value={guests} onChange={(e) => setGuests(e.target.value)}>
-                    {[1, 2, 3, 4, 5].map((n) => (
-                      <option key={n} value={n}>
-                        {n}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
-              <div className="field">
-                <label htmlFor="message">Message for Mayet (optional)</label>
-                <textarea
-                  id="message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Leave a warm note..."
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="submit-btn"
-                disabled={status === 'sending' || !name.trim() || !attendance}
-              >
-                {status === 'sending' ? 'Sending…' : 'Send RSVP'}
-              </button>
-
-              {status === 'error' && (
-                <p className="status-msg error">
-                  Something went wrong sending your response — please try again.
-                </p>
-              )}
-            </form>
-          )}
+          <RSVPForm formPrefix="d1" />
         </div>
 
         <p className="footer">With Love — The Family of {EVENT.name}</p>

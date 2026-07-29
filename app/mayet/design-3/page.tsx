@@ -1,18 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import { EVENT, PALETTE, type Attendance } from '@/lib/event';
-import { playfair, jost } from '../fonts';
+import { EVENT, PALETTE, GLOBAL_CSS_3 } from '../constants';
+import { playfair, jost } from '../../fonts';
+import RSVPForm from '../RSVPForm';
 
 // -----------------------------------------------------------------------
-// DESIGN 3 — "Botanical Frame"
-// Event data, attendance type, and color palette now live in
-// lib/event.ts and are shared across every design (rsvp, rsvp2, rsvp3).
-// Styled as a symmetric, romantic invitation: corner leaf sprigs framing
-// the card, a large translucent "65" watermark behind the name, and a
-// soft guest-book style RSVP form.
-// Display face: 'Playfair Display' italic — a softer, more romantic serif
-// than the main page's Cormorant, paired with the same watermark warmth.
+// Design 3 — "Botanical Frame"
+// Symmetric, romantic invitation: corner leaf sprigs framing the card,
+// a large translucent "65" watermark behind the name, soft guest-book
+// style RSVP form.
+// Display face: 'Playfair Display' italic — a softer, romantic serif.
 // -----------------------------------------------------------------------
 
 const SPRIG_COLORS = [PALETTE.burnt, PALETTE.coral, PALETTE.marigold, PALETTE.olive];
@@ -51,54 +48,12 @@ function LeafSprig({ rotate }: { rotate: number }) {
   );
 }
 
-export default function FrameDesign() {
-  const [name, setName] = useState('');
-  const [attendance, setAttendance] = useState<Attendance>('');
-  const [guests, setGuests] = useState('1');
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!name.trim() || !attendance) return;
-    setStatus('sending');
-    try {
-      const res = await fetch('/api/rsvp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, attendance, guests, message }),
-      });
-      if (!res.ok) throw new Error('Request failed');
-      setStatus('sent');
-    } catch {
-      setStatus('error');
-    }
-  }
-
+export default function Design3() {
   return (
     <div className={`page ${playfair.variable} ${jost.variable}`}>
-      <style jsx global>{`
-        :root {
-          --cream: ${PALETTE.cream};
-          /* This design keeps a slightly warmer local "panel" shade than
-             the shared PALETTE.panel — intentional, not an oversight. */
-          --panel: #fffdf9;
-          --ink: ${PALETTE.ink};
-          --sage: ${PALETTE.sage};
-          --burnt: ${PALETTE.burnt};
-          --coral: ${PALETTE.coral};
-          --marigold: ${PALETTE.marigold};
-          --olive: ${PALETTE.olive};
-        }
-        * {
-          box-sizing: border-box;
-        }
-        body {
-          margin: 0;
-        }
-      `}</style>
+      <style>{GLOBAL_CSS_3}</style>
 
-      <style jsx>{`
+      <style>{`
         .page {
           min-height: 100vh;
           background: var(--cream);
@@ -124,41 +79,19 @@ export default function FrameDesign() {
         }
 
         @keyframes rise {
-          from {
-            opacity: 0;
-            transform: translateY(6px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .frame {
-            animation: none;
-          }
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
 
-        .corner {
-          position: absolute;
-          opacity: 0.9;
+        @media (prefers-reduced-motion: reduce) {
+          .frame { animation: none; }
         }
-        .corner.tl {
-          top: -6px;
-          left: -6px;
-        }
-        .corner.tr {
-          top: -6px;
-          right: -6px;
-        }
-        .corner.bl {
-          bottom: -6px;
-          left: -6px;
-        }
-        .corner.br {
-          bottom: -6px;
-          right: -6px;
-        }
+
+        .corner { position: absolute; opacity: 0.9; }
+        .corner.tl { top: -6px;    left: -6px;  }
+        .corner.tr { top: -6px;    right: -6px; }
+        .corner.bl { bottom: -6px; left: -6px;  }
+        .corner.br { bottom: -6px; right: -6px; }
 
         .watermark {
           position: absolute;
@@ -175,10 +108,7 @@ export default function FrameDesign() {
           line-height: 1;
         }
 
-        .content {
-          position: relative;
-          text-align: center;
-        }
+        .content { position: relative; text-align: center; }
 
         .hero-photo {
           width: 108px;
@@ -189,12 +119,7 @@ export default function FrameDesign() {
           border: 2px solid var(--marigold);
           box-shadow: 0 8px 20px -10px rgba(74, 46, 23, 0.4);
         }
-        .hero-photo img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
+        .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         .eyebrow {
           font-size: 11px;
@@ -231,12 +156,7 @@ export default function FrameDesign() {
           margin: 0 auto 34px;
         }
 
-        .divider-flower {
-          text-align: center;
-          color: var(--coral);
-          font-size: 14px;
-          margin: 0 0 30px;
-        }
+        .divider-flower { text-align: center; color: var(--coral); font-size: 14px; margin: 0 0 30px; }
 
         .detail-row {
           display: grid;
@@ -273,19 +193,9 @@ export default function FrameDesign() {
           overflow: hidden;
           border: 1px solid rgba(163, 152, 20, 0.22);
         }
-        .map-frame iframe {
-          width: 100%;
-          height: 190px;
-          border: 0;
-          display: block;
-        }
+        .map-frame iframe { width: 100%; height: 190px; border: 0; display: block; }
 
-        .attire-gallery {
-          display: flex;
-          justify-content: center;
-          gap: 12px;
-          margin: 0 auto 8px;
-        }
+        .attire-gallery { display: flex; justify-content: center; gap: 12px; margin: 0 auto 8px; }
         .attire-gallery img {
           width: 88px;
           height: 116px;
@@ -319,16 +229,9 @@ export default function FrameDesign() {
           margin: 0 0 4px;
           color: var(--burnt);
         }
-        .form-sub {
-          text-align: center;
-          font-size: 12px;
-          color: var(--sage);
-          margin: 0 0 24px;
-        }
+        .form-sub { text-align: center; font-size: 12px; color: var(--sage); margin: 0 0 24px; }
 
-        .field {
-          margin-bottom: 16px;
-        }
+        .field { margin-bottom: 16px; }
         .field label {
           display: block;
           font-size: 10px;
@@ -351,22 +254,12 @@ export default function FrameDesign() {
           padding: 11px 18px;
           outline: none;
         }
-        .field textarea {
-          border-radius: 16px;
-          min-height: 60px;
-          resize: vertical;
-        }
+        .field textarea { border-radius: 16px; min-height: 60px; resize: vertical; }
         .field input:focus,
         .field textarea:focus,
-        .field select:focus {
-          border-color: var(--burnt);
-        }
+        .field select:focus { border-color: var(--burnt); }
 
-        .attend-options {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-        }
+        .attend-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .attend-btn {
           border: 1px solid rgba(163, 152, 20, 0.3);
           background: var(--panel);
@@ -376,11 +269,7 @@ export default function FrameDesign() {
           border-radius: 999px;
           cursor: pointer;
         }
-        .attend-btn.active {
-          background: var(--coral);
-          border-color: var(--coral);
-          color: #fff9ef;
-        }
+        .attend-btn.active { background: var(--coral); border-color: var(--coral); color: #fff9ef; }
 
         .submit-btn {
           width: 100%;
@@ -396,13 +285,8 @@ export default function FrameDesign() {
           padding: 14px;
           cursor: pointer;
         }
-        .submit-btn:hover:not(:disabled) {
-          background: var(--coral);
-        }
-        .submit-btn:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
+        .submit-btn:hover:not(:disabled) { background: var(--coral); }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .status-msg {
           text-align: center;
@@ -412,40 +296,21 @@ export default function FrameDesign() {
           color: var(--burnt);
           margin-top: 14px;
         }
-        .status-msg.error {
-          color: var(--coral);
-        }
+        .status-msg.error { color: var(--coral); }
 
         @media (max-width: 480px) {
-          .frame {
-            padding: 44px 20px 32px;
-          }
-          .name {
-            font-size: 32px;
-          }
-          .watermark {
-            font-size: 170px;
-          }
-          .detail-row {
-            grid-template-columns: 1fr;
-            gap: 20px;
-          }
+          .frame { padding: 44px 20px 32px; }
+          .name { font-size: 32px; }
+          .watermark { font-size: 170px; }
+          .detail-row { grid-template-columns: 1fr; gap: 20px; }
         }
       `}</style>
 
       <div className="frame">
-        <div className="corner tl">
-          <LeafSprig rotate={0} />
-        </div>
-        <div className="corner tr">
-          <LeafSprig rotate={90} />
-        </div>
-        <div className="corner bl">
-          <LeafSprig rotate={-90} />
-        </div>
-        <div className="corner br">
-          <LeafSprig rotate={180} />
-        </div>
+        <div className="corner tl"><LeafSprig rotate={0} /></div>
+        <div className="corner tr"><LeafSprig rotate={90} /></div>
+        <div className="corner bl"><LeafSprig rotate={-90} /></div>
+        <div className="corner br"><LeafSprig rotate={180} /></div>
 
         <span className="watermark">{EVENT.age}</span>
 
@@ -472,7 +337,7 @@ export default function FrameDesign() {
             <div>
               <p className="label">Date</p>
               <p className="value">
-                Nov 19
+                {EVENT.date}
                 <span>2026</span>
               </p>
             </div>
@@ -494,9 +359,7 @@ export default function FrameDesign() {
 
           <div className="map-frame">
             <iframe
-              src={`https://www.google.com/maps?q=${encodeURIComponent(
-                EVENT.mapQuery
-              )}&output=embed`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(EVENT.mapQuery)}&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title={`Map to ${EVENT.venue}`}
@@ -504,89 +367,15 @@ export default function FrameDesign() {
           </div>
 
           <div className="attire-gallery">
-            <img src="https://placehold.co/200x260/F94063/FFF9EF?text=Attire" alt="Attire inspiration placeholder" />
-            <img src="https://placehold.co/200x260/A39814/FFF9EF?text=Attire" alt="Attire inspiration placeholder" />
+            <img src="https://placehold.co/200x260/F94063/FFF9EF?text=Attire" alt="Attire inspiration" />
+            <img src="https://placehold.co/200x260/A39814/FFF9EF?text=Attire" alt="Attire inspiration" />
           </div>
           <p className="attire-label">Garden Formal — florals &amp; warm hues</p>
 
           <div className="form-wrap">
             <h2 className="form-title">Kindly Respond</h2>
             <p className="form-sub">We hope to hear from you by {EVENT.rsvpBy}</p>
-
-            {status === 'sent' ? (
-              <p className="status-msg">
-                Thank you, {name.split(' ')[0] || 'friend'}. We can&apos;t wait to celebrate with you.
-              </p>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="field">
-                  <label htmlFor="f-name">Full Name</label>
-                  <input
-                    id="f-name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
-                    required
-                  />
-                </div>
-
-                <div className="field">
-                  <label>Will you attend?</label>
-                  <div className="attend-options">
-                    <button
-                      type="button"
-                      className={`attend-btn ${attendance === 'joyfully-accepts' ? 'active' : ''}`}
-                      onClick={() => setAttendance('joyfully-accepts')}
-                    >
-                      Joyfully accepts
-                    </button>
-                    <button
-                      type="button"
-                      className={`attend-btn ${attendance === 'regretfully-declines' ? 'active' : ''}`}
-                      onClick={() => setAttendance('regretfully-declines')}
-                    >
-                      Regretfully declines
-                    </button>
-                  </div>
-                </div>
-
-                {attendance === 'joyfully-accepts' && (
-                  <div className="field">
-                    <label htmlFor="f-guests">Number of Guests</label>
-                    <select id="f-guests" value={guests} onChange={(e) => setGuests(e.target.value)}>
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <option key={n} value={n}>
-                          {n}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-
-                <div className="field">
-                  <label htmlFor="f-message">Message for Mayet (optional)</label>
-                  <textarea
-                    id="f-message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Leave a warm note..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="submit-btn"
-                  disabled={status === 'sending' || !name.trim() || !attendance}
-                >
-                  {status === 'sending' ? 'Sending…' : 'Send RSVP'}
-                </button>
-
-                {status === 'error' && (
-                  <p className="status-msg error">Something went wrong — please try again.</p>
-                )}
-              </form>
-            )}
+            <RSVPForm formPrefix="d3" />
           </div>
         </div>
       </div>

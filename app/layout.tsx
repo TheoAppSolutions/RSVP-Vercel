@@ -1,9 +1,21 @@
 import type { Metadata } from 'next';
+import {
+  cormorant,
+  jost,
+  fraunces,
+  playfair,
+  script,
+  oswald,
+  garamond,
+  inter,
+  bebas,
+  work,
+} from './fonts';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Mayet's 65th Birthday — RSVP",
-  description:
-    "You're invited to celebrate Mayet Sumagaysay's 65th birthday on November 19, 2026 at Summit Hotel. Please RSVP.",
+  title: "Celebration RSVPs",
+  description: "RSVP for our upcoming birthday events.",
 };
 
 export default function RootLayout({
@@ -12,8 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body style={{ margin: 0 }}>{children}</body>
+    <html lang="en" className="scroll-smooth">
+      <body
+        className={`${cormorant.variable} ${jost.variable} ${fraunces.variable} ${playfair.variable} ${script.variable} ${oswald.variable} ${garamond.variable} ${inter.variable} ${bebas.variable} ${work.variable} antialiased`}
+        style={{ margin: 0 }}
+      >
+        {children}
+      </body>
     </html>
   );
 }

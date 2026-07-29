@@ -1,65 +1,23 @@
 'use client';
 
-import { useState } from 'react';
-import { EVENT, PALETTE, type Attendance } from '@/lib/event';
-import { fraunces, jost } from '../fonts';
+import { EVENT, GLOBAL_CSS_2 } from '../constants';
+import { fraunces, jost } from '../../fonts';
+import RSVPForm from '../RSVPForm';
 
 // -----------------------------------------------------------------------
-// DESIGN 2 — "Garden Ticket"
-// Event data, attendance type, and color palette now live in
-// lib/event.ts and are shared across every design (rsvp, rsvp2, rsvp3).
+// Design 2 — "Garden Ticket"
 // Styled as an asymmetric event-ticket: a colored stub with the "65"
 // numeral on one side, perforated divider, invitation + RSVP on the other.
-// Display face: 'Fraunces' — a bolder, more graphic serif than the main
-// page's Cormorant, for a distinct editorial-ticket feel.
+// Display face: 'Fraunces' — a bolder, more graphic serif for an
+// editorial-ticket feel.
 // -----------------------------------------------------------------------
 
-export default function TicketDesign() {
-  const [name, setName] = useState('');
-  const [attendance, setAttendance] = useState<Attendance>('');
-  const [guests, setGuests] = useState('1');
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!name.trim() || !attendance) return;
-    setStatus('sending');
-    try {
-      const res = await fetch('/api/rsvp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, attendance, guests, message }),
-      });
-      if (!res.ok) throw new Error('Request failed');
-      setStatus('sent');
-    } catch {
-      setStatus('error');
-    }
-  }
-
+export default function Design2() {
   return (
     <div className={`page ${fraunces.variable} ${jost.variable}`}>
-      <style jsx global>{`
-        :root {
-          --cream: ${PALETTE.cream};
-          --panel: ${PALETTE.panel};
-          --ink: ${PALETTE.ink};
-          --sage: ${PALETTE.sage};
-          --burnt: ${PALETTE.burnt};
-          --coral: ${PALETTE.coral};
-          --marigold: ${PALETTE.marigold};
-          --olive: ${PALETTE.olive};
-        }
-        * {
-          box-sizing: border-box;
-        }
-        body {
-          margin: 0;
-        }
-      `}</style>
+      <style>{GLOBAL_CSS_2}</style>
 
-      <style jsx>{`
+      <style>{`
         .page {
           min-height: 100vh;
           background: var(--cream);
@@ -84,19 +42,12 @@ export default function TicketDesign() {
         }
 
         @keyframes rise {
-          from {
-            opacity: 0;
-            transform: translateY(6px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
+
         @media (prefers-reduced-motion: reduce) {
-          .ticket {
-            animation: none;
-          }
+          .ticket { animation: none; }
         }
 
         /* ---------- Stub ---------- */
@@ -132,11 +83,7 @@ export default function TicketDesign() {
           transform: rotate(180deg);
         }
 
-        .stub-icon {
-          width: 30px;
-          height: 30px;
-          opacity: 0.9;
-        }
+        .stub-icon { width: 30px; height: 30px; opacity: 0.9; }
 
         /* perforation */
         .perforation {
@@ -154,19 +101,12 @@ export default function TicketDesign() {
           background: var(--cream);
           border-radius: 50%;
         }
-        .perforation::before {
-          top: -10px;
-        }
-        .perforation::after {
-          bottom: -10px;
-        }
+        .perforation::before { top: -10px; }
+        .perforation::after  { bottom: -10px; }
 
         /* ---------- Main ---------- */
 
-        .main {
-          flex: 1;
-          padding: 40px 34px;
-        }
+        .main { flex: 1; padding: 40px 34px; }
 
         .eyebrow {
           font-size: 11px;
@@ -202,12 +142,7 @@ export default function TicketDesign() {
           float: right;
           margin: -4px 0 12px 12px;
         }
-        .hero-photo img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-        }
+        .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         .info-list {
           list-style: none;
@@ -217,11 +152,7 @@ export default function TicketDesign() {
           gap: 14px;
         }
 
-        .info-list li {
-          display: flex;
-          gap: 12px;
-          align-items: baseline;
-        }
+        .info-list li { display: flex; gap: 12px; align-items: baseline; }
 
         .dot {
           width: 8px;
@@ -252,18 +183,9 @@ export default function TicketDesign() {
           overflow: hidden;
           border: 1px solid rgba(163, 152, 20, 0.22);
         }
-        .map-frame iframe {
-          width: 100%;
-          height: 160px;
-          border: 0;
-          display: block;
-        }
+        .map-frame iframe { width: 100%; height: 160px; border: 0; display: block; }
 
-        .attire-row {
-          display: flex;
-          gap: 10px;
-          margin: 18px 0 8px;
-        }
+        .attire-row { display: flex; gap: 10px; margin: 18px 0 8px; }
         .attire-row img {
           width: 64px;
           height: 84px;
@@ -271,22 +193,10 @@ export default function TicketDesign() {
           border-radius: 4px;
           border: 1px solid rgba(163, 152, 20, 0.22);
         }
-        .attire-note {
-          font-size: 12px;
-          color: var(--sage);
-          align-self: center;
-          line-height: 1.5;
-        }
-        .attire-note b {
-          color: var(--ink);
-          font-weight: 500;
-        }
+        .attire-note { font-size: 12px; color: var(--sage); align-self: center; line-height: 1.5; }
+        .attire-note b { color: var(--ink); font-weight: 500; }
 
-        .divider {
-          border: none;
-          border-top: 1px dashed rgba(163, 152, 20, 0.3);
-          margin: 26px 0 24px;
-        }
+        .divider { border: none; border-top: 1px dashed rgba(163, 152, 20, 0.3); margin: 26px 0 24px; }
 
         /* ---------- RSVP ---------- */
 
@@ -297,15 +207,9 @@ export default function TicketDesign() {
           margin: 0 0 4px;
           color: var(--burnt);
         }
-        .form-sub {
-          font-size: 12px;
-          color: var(--sage);
-          margin: 0 0 20px;
-        }
+        .form-sub { font-size: 12px; color: var(--sage); margin: 0 0 20px; }
 
-        .field {
-          margin-bottom: 16px;
-        }
+        .field { margin-bottom: 16px; }
         .field label {
           display: block;
           font-size: 10px;
@@ -328,21 +232,12 @@ export default function TicketDesign() {
           padding: 10px 16px;
           outline: none;
         }
-        .field textarea {
-          border-radius: 14px;
-          min-height: 56px;
-          resize: vertical;
-        }
+        .field textarea { border-radius: 14px; min-height: 56px; resize: vertical; }
         .field input:focus,
         .field textarea:focus,
-        .field select:focus {
-          border-color: var(--burnt);
-        }
+        .field select:focus { border-color: var(--burnt); }
 
-        .attend-options {
-          display: flex;
-          gap: 10px;
-        }
+        .attend-options { display: flex; gap: 10px; }
         .attend-btn {
           flex: 1;
           border: 1px solid rgba(163, 152, 20, 0.25);
@@ -353,11 +248,7 @@ export default function TicketDesign() {
           border-radius: 20px;
           cursor: pointer;
         }
-        .attend-btn.active {
-          background: var(--burnt);
-          border-color: var(--burnt);
-          color: #fff9ef;
-        }
+        .attend-btn.active { background: var(--burnt); border-color: var(--burnt); color: #fff9ef; }
 
         .submit-btn {
           width: 100%;
@@ -373,13 +264,8 @@ export default function TicketDesign() {
           padding: 13px;
           cursor: pointer;
         }
-        .submit-btn:hover:not(:disabled) {
-          background: var(--coral);
-        }
-        .submit-btn:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
+        .submit-btn:hover:not(:disabled) { background: var(--coral); }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .status-msg {
           text-align: center;
@@ -389,40 +275,20 @@ export default function TicketDesign() {
           color: var(--burnt);
           margin-top: 14px;
         }
-        .status-msg.error {
-          color: var(--coral);
-        }
+        .status-msg.error { color: var(--coral); }
 
         @media (max-width: 560px) {
-          .ticket {
-            flex-direction: column;
-          }
-          .stub {
-            width: 100%;
-            flex-direction: row;
-            padding: 18px 24px;
-          }
-          .stub-number {
-            writing-mode: horizontal-tb;
-            transform: none;
-            font-size: 48px;
-          }
-          .perforation {
-            display: none;
-          }
-          .hero-photo {
-            float: none;
-            margin: 0 auto 14px;
-          }
+          .ticket { flex-direction: column; }
+          .stub { width: 100%; flex-direction: row; padding: 18px 24px; }
+          .stub-number { writing-mode: horizontal-tb; transform: none; font-size: 48px; }
+          .perforation { display: none; }
+          .hero-photo { float: none; margin: 0 auto 14px; }
         }
       `}</style>
 
       <div className="ticket">
         <div className="stub">
-          <p className="stub-tag">Garden
-            <br />
-            Celebration
-          </p>
+          <p className="stub-tag">Garden<br />Celebration</p>
           <span className="stub-number">65</span>
           <svg className="stub-icon" viewBox="0 0 24 24" fill="none">
             <path
@@ -451,9 +317,7 @@ export default function TicketDesign() {
               <span className="dot" style={{ background: 'var(--burnt)' }} />
               <div>
                 <span className="info-label">Date &amp; Time</span>
-                <span className="info-value">
-                  {EVENT.date} · {EVENT.time}
-                </span>
+                <span className="info-value">{EVENT.date} · {EVENT.time}</span>
               </div>
             </li>
             <li>
@@ -474,9 +338,7 @@ export default function TicketDesign() {
 
           <div className="map-frame">
             <iframe
-              src={`https://www.google.com/maps?q=${encodeURIComponent(
-                EVENT.mapQuery
-              )}&output=embed`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(EVENT.mapQuery)}&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title={`Map to ${EVENT.venue}`}
@@ -484,8 +346,8 @@ export default function TicketDesign() {
           </div>
 
           <div className="attire-row">
-            <img src="https://placehold.co/150x200/F94063/FFF9EF?text=A" alt="Attire inspiration placeholder" />
-            <img src="https://placehold.co/150x200/A39814/FFF9EF?text=B" alt="Attire inspiration placeholder" />
+            <img src="https://placehold.co/150x200/F94063/FFF9EF?text=A" alt="Attire inspiration" />
+            <img src="https://placehold.co/150x200/A39814/FFF9EF?text=B" alt="Attire inspiration" />
             <p className="attire-note">
               <b>Garden Formal.</b> Florals and warm garden hues welcome.
             </p>
@@ -496,80 +358,7 @@ export default function TicketDesign() {
           <h2 className="form-title">Kindly Respond</h2>
           <p className="form-sub">By {EVENT.rsvpBy}</p>
 
-          {status === 'sent' ? (
-            <p className="status-msg">
-              Thank you, {name.split(' ')[0] || 'friend'} — see you in the garden.
-            </p>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <div className="field">
-                <label htmlFor="t-name">Full Name</label>
-                <input
-                  id="t-name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
-                  required
-                />
-              </div>
-
-              <div className="field">
-                <label>Will you attend?</label>
-                <div className="attend-options">
-                  <button
-                    type="button"
-                    className={`attend-btn ${attendance === 'joyfully-accepts' ? 'active' : ''}`}
-                    onClick={() => setAttendance('joyfully-accepts')}
-                  >
-                    Accepts
-                  </button>
-                  <button
-                    type="button"
-                    className={`attend-btn ${attendance === 'regretfully-declines' ? 'active' : ''}`}
-                    onClick={() => setAttendance('regretfully-declines')}
-                  >
-                    Declines
-                  </button>
-                </div>
-              </div>
-
-              {attendance === 'joyfully-accepts' && (
-                <div className="field">
-                  <label htmlFor="t-guests">Guests (incl. yourself)</label>
-                  <select id="t-guests" value={guests} onChange={(e) => setGuests(e.target.value)}>
-                    {[1, 2, 3, 4, 5].map((n) => (
-                      <option key={n} value={n}>
-                        {n}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
-              <div className="field">
-                <label htmlFor="t-message">Message (optional)</label>
-                <textarea
-                  id="t-message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Leave a warm note..."
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="submit-btn"
-                disabled={status === 'sending' || !name.trim() || !attendance}
-              >
-                {status === 'sending' ? 'Sending…' : 'Send RSVP'}
-              </button>
-
-              {status === 'error' && (
-                <p className="status-msg error">Something went wrong — please try again.</p>
-              )}
-            </form>
-          )}
+          <RSVPForm formPrefix="d2" />
         </div>
       </div>
     </div>

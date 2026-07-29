@@ -1,18 +1,15 @@
 // -----------------------------------------------------------------------
 // Glenna — shared constants for all design pages.
 // Edit event details, colors, or per-design styles here once — every
-// design picks it up. Naming mirrors app/mayet/constants.ts (EVENT,
-// PALETTE, STYLE_1/2/3) even though the underlying values are Tailwind
-// class bundles here instead of CSS strings — see RSVPTheme in
-// components/RSVPForm.tsx.
+// design picks it up. 
 // -----------------------------------------------------------------------
 
-import type { RSVPTheme } from "@/app/glenna/components/RSVPForm";
+import type { RSVPTheme } from "@/app/components/form";
 
-export { EVENT, PALETTE } from "@/app/glenna/lib/event";
+export { EVENT, PALETTE } from "@/lib/event";
 
 // -----------------------------------------------------------------------
-// Per-design style tokens (STYLE_1/2/3, matching Mayet's naming)
+// Per-design style tokens (STYLE_1/2/3)
 // -----------------------------------------------------------------------
 
 /** Design 1 — "Rhinestone Ranch" (dark denim + rhinestone gold) */

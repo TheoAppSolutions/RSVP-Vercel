@@ -1,5 +1,5 @@
-import type { RSVPClientConfig } from "@/lib/rsvp/types";
-import { EVENT } from "./lib/event";
+import type { RSVPClientConfig } from "@/lib/types";
+import { EVENT } from "../lib/event";
 
 // -----------------------------------------------------------------------
 // Glenna's backend wiring — which sheet to write to and who gets owner
@@ -11,6 +11,6 @@ export const RSVP_CONFIG: RSVPClientConfig = {
   slug: "glenna",
   eventLabel: EVENT.title,
   honoreeFirstName: EVENT.honoree.replace(/^Atty\.\s*/, "").split(" ")[0],
-  sheetIdEnv: "GLENNA_GOOGLE_SHEET_ID",
-  ownerEmailEnv: "GLENNA_OWNER_EMAIL",
+  sheetIdEnv: "GOOGLE_SHEET_ID",
+  ownerEmailEnv: "OWNER_EMAIL",
 };

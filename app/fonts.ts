@@ -1,46 +1,11 @@
 import {
   Cormorant_Garamond,
-  Jost,
-  Fraunces,
-  Playfair_Display,
   Dancing_Script,
   Oswald,
   Inter,
   Bebas_Neue,
   Work_Sans,
 } from 'next/font/google';
-
-// Mayet's fonts
-export const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  style: ['normal', 'italic'],
-  variable: '--font-cormorant',
-  display: 'swap',
-});
-
-export const jost = Jost({
-  subsets: ['latin'],
-  weight: ['300', '400', '500'],
-  variable: '--font-jost',
-  display: 'swap',
-});
-
-export const fraunces = Fraunces({
-  subsets: ['latin'],
-  weight: ['500', '600'],
-  style: ['normal', 'italic'],
-  variable: '--font-fraunces',
-  display: 'swap',
-});
-
-export const playfair = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['500', '600'],
-  style: ['normal', 'italic'],
-  variable: '--font-playfair',
-  display: 'swap',
-});
 
 // Glenna's fonts
 export const script = Dancing_Script({

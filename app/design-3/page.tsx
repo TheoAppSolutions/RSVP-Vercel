@@ -1,4 +1,4 @@
-import RSVPForm from "../components/RSVPForm";
+import Form from "../components/form";
 import { EVENT, STYLE_3 } from "../constants";
 
 // -----------------------------------------------------------------------
@@ -69,7 +69,7 @@ export default function Design3() {
           <div className="border-2 border-denim-800 bg-white p-7 sm:p-9">
             <h2 className="font-bebas text-3xl tracking-wide text-denim-800">RSVP</h2>
             <p className="mb-6 mt-1 font-work text-sm text-denim-500">Kindly reply by {EVENT.rsvpBy}.</p>
-            <RSVPForm theme={STYLE_3} />
+            <Form theme={STYLE_3} />
           </div>
         </div>
       </section>

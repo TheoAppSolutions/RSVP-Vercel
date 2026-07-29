@@ -1,7 +1,7 @@
 # RSVP Suites
 
-A Next.js app hosting RSVP invitation sites for two clients — **Mayet**
-and **Glenna** — each with three visual designs. Every design's form
+A Next.js app hosting RSVP invitation sites for two clients — **Glenna** — 
+each with three visual designs. Every design's form
 saves to that client's own Google Sheet and sends a confirmation email
 to the guest plus a notification email to the event owner.
 
@@ -15,23 +15,13 @@ markup differing.
 app/
   layout.tsx, page.tsx, fonts.ts, globals.css   Shared shell + client picker
   api/rsvp/
-    mayet/route.ts     Mayet's API route  — thin, uses lib/rsvp/handler.ts
-    glenna/route.ts    Glenna's API route — thin, uses lib/rsvp/handler.ts
-  mayet/
-    page.tsx            Design picker ("View 3 Designs")
-    rsvp.config.ts       Which sheet + owner inbox this client uses
-    lib/event.ts          Event details + palette (edit here to rebrand)
-    constants.ts           Re-exports EVENT + per-design CSS var blocks
-    components/RSVPForm.tsx  Mayet-styled form (styled-jsx classes)
-    design-1/page.tsx      "Botanical Garland"
-    design-2/page.tsx      "Garden Ticket"
-    design-3/page.tsx      "Botanical Frame"
-  glenna/
+    route.ts    Glenna's API route — thin, uses lib/rsvp/handler.ts
+  
     page.tsx            Design picker
     rsvp.config.ts       Which sheet + owner inbox this client uses
     lib/event.ts          Event details
     constants.ts           Re-exports EVENT + per-design theme tokens
-    components/RSVPForm.tsx  Glenna-styled form (Tailwind theme prop)
+    components/form.tsx  Glenna-styled form (Tailwind theme prop)
     design-1/page.tsx      "Rhinestone Ranch"
     design-2/page.tsx      "Sapphire Soirée"
     design-3/page.tsx      "Denim Edit"
@@ -44,7 +34,7 @@ lib/
 ```
 
 **Why it's split this way:** the two clients look completely different
-(different fonts, palettes, layout — see `components/RSVPForm.tsx` in
+(different fonts, palettes, layout — see `components/form.tsx` in
 each), so their forms and design pages stay separate. But "save a row
 to a sheet" and "send two emails" is identical logic for both, so that
 part lives once in `lib/rsvp/` and each client just plugs in its own
@@ -70,7 +60,7 @@ cp .env.example .env.local   # then fill in the values (see step 2)
 npm run dev
 ```
 
-Visit `http://localhost:3000` — it links out to `/mayet` and `/glenna`.
+Visit `http://localhost:3000` — it links out to `/glenna`.
 
 ---
 
@@ -107,8 +97,7 @@ For each sheet, click **Share**, paste in the `client_email`, and give it **Edit
 ```
 GOOGLE_SERVICE_ACCOUNT_EMAIL=rsvp-writer@your-project.iam.gserviceaccount.com
 GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvQ...\n-----END PRIVATE KEY-----\n"
-MAYET_GOOGLE_SHEET_ID=your-mayet-sheet-id
-GLENNA_GOOGLE_SHEET_ID=your-glenna-sheet-id
+GOOGLE_SHEET_ID=your-glenna-sheet-id
 ```
 
 The private key must be pasted exactly as it appears in the JSON file
@@ -127,8 +116,7 @@ Both clients share one sender identity; each has its own owner inbox.
 ```
 RESEND_API_KEY=re_your_key
 EMAIL_FROM="RSVPs <rsvp@yourdomain.com>"
-MAYET_OWNER_EMAIL=mayet-owner@example.com
-GLENNA_OWNER_EMAIL=glenna-owner@example.com
+OWNER_EMAIL=glenna-owner@example.com
 ```
 
 If `RESEND_API_KEY` or `EMAIL_FROM` is missing, the app still saves to
@@ -143,10 +131,10 @@ best-effort and never blocks a successful RSVP.
 2. In **Settings → Environment Variables**, add all nine variables from
    `.env.local`:
    `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`,
-   `MAYET_GOOGLE_SHEET_ID`, `GLENNA_GOOGLE_SHEET_ID`,
+   `GOOGLE_SHEET_ID`,
    `RESEND_API_KEY`, `EMAIL_FROM`,
-   `MAYET_OWNER_EMAIL`, `GLENNA_OWNER_EMAIL`.
-3. Deploy. Visit `your-project.vercel.app/mayet` or `/glenna`.
+   `OWNER_EMAIL`.
+3. Deploy. Visit `your-project.vercel.app/`.
 
 Every submitted RSVP appears as a new row in the right sheet within a
 second or two, and both the guest and the event owner get an email.
@@ -178,5 +166,4 @@ in a page.
 
 ## Event details
 
-- **Mayet:** edit `app/mayet/lib/event.ts`.
-- **Glenna:** edit `app/glenna/lib/event.ts`.
+- **Glenna:** edit `lib/event.ts`.

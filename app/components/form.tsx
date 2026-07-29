@@ -5,13 +5,12 @@ import { EVENT } from "../constants";
 
 // -----------------------------------------------------------------------
 // Glenna-scoped RSVP form.
-// Self-contained: posts to /api/rsvp/glenna and hard-codes Glenna-specific
+// Self-contained: posts to /api/ and hard-codes Glenna-specific
 // copy (reply date, success text). Takes a `theme` prop so each design
 // page can hand it its own Tailwind classes (see ../constants.ts for
 // STYLE_1/2/3) without duplicating the form logic per design. The wire
 // payload ({name, email, attending, guests, message}) matches the shared
-// handler in lib/rsvp/ — see app/mayet's RSVPForm for the same contract
-// with different markup/styling.
+// handler in lib/rsvp/.
 // -----------------------------------------------------------------------
 
 export type RSVPTheme = {
@@ -32,7 +31,7 @@ type Props = {
   formPrefix?: string;
 };
 
-export default function RSVPForm({ theme, formPrefix = "glenna" }: Props) {
+export default function Form({ theme, formPrefix = "glenna" }: Props) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [attending, setAttending] = useState<"yes" | "no" | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
@@ -56,7 +55,7 @@ export default function RSVPForm({ theme, formPrefix = "glenna" }: Props) {
     };
 
     try {
-      const res = await fetch("/api/rsvp/glenna", {
+      const res = await fetch("/api/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

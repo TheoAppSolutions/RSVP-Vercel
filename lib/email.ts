@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import type { RSVPClientConfig, RSVPSubmission } from "./types";
+import type { RSVPClientConfig, RSVPSubmission } from "./rsvp/types";
 
 // -----------------------------------------------------------------------
 // Sends two emails per submission, using Resend (https://resend.com —

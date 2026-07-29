@@ -2,14 +2,13 @@
 // Shared across every RSVP page design (design-1, design-2, design-3).
 // Edit event details here once — every page picks it up. Colors come
 // from lib/colors.ts (the single source of truth for every hex value in
-// the app) — see app/mayet/lib/event.ts for the same PALETTE pattern
-// with Mayet's colors. Glenna's designs consume color via Tailwind
+// the app) — Glenna's designs consume color via Tailwind
 // classes (tailwind.config.ts, sourced from the same file) rather than
 // reading PALETTE directly — it's exported here for parity and for any
 // future spot that needs a raw hex value.
 // -----------------------------------------------------------------------
 
-import { GLENNA_COLORS } from "@/lib/colors";
+import { PAGE_COLORS } from "@/lib/colors";
 
 export const EVENT = {
   honoree: "Atty. Glenna",
@@ -22,4 +21,4 @@ export const EVENT = {
   rsvpBy: "September 26, 2026",
 };
 
-export const PALETTE = GLENNA_COLORS;
+export const PALETTE = PAGE_COLORS;

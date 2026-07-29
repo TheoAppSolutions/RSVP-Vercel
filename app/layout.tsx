@@ -1,10 +1,5 @@
 import type { Metadata } from 'next';
 import {
-  cormorant,
-  jost,
-  fraunces,
-  playfair,
-  script,
   oswald,
   garamond,
   inter,
@@ -26,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${cormorant.variable} ${jost.variable} ${fraunces.variable} ${playfair.variable} ${script.variable} ${oswald.variable} ${garamond.variable} ${inter.variable} ${bebas.variable} ${work.variable} antialiased`}
+        className={`${oswald.variable} ${garamond.variable} ${inter.variable} ${bebas.variable} ${work.variable} antialiased`}
         style={{ margin: 0 }}
       >
         {children}

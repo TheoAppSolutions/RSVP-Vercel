@@ -12,8 +12,7 @@ import type { RSVPClientConfig, RSVPSubmission } from "./types";
 //   GOOGLE_PRIVATE_KEY
 //
 // Per client (see each client's rsvp.config.ts for the exact var name):
-//   MAYET_GOOGLE_SHEET_ID
-//   GLENNA_GOOGLE_SHEET_ID
+//   GOOGLE_SHEET_ID
 // -----------------------------------------------------------------------
 
 function getAuth() {

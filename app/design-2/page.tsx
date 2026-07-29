@@ -37,6 +37,16 @@ export default function Design2() {
           An Evening of Denim &amp; Diamonds
         </p>
 
+        {/* Portrait photo, cropped into an elegant oval frame */}
+        <div className="relative mt-8 h-48 w-40 overflow-hidden rounded-[50%] border border-denim-100/60 shadow-[0_0_40px_-10px_rgba(220,230,255,0.35)]">
+          <img
+            src="/glenna.jpg"
+            alt="Glenna"
+            className="h-full w-full object-cover"
+            style={{ objectPosition: "-50px -50px", height: "400px" }}
+          />
+        </div>
+
         <h1 className="mt-5 font-garamond text-6xl italic text-denim-50 sm:text-7xl">
           Glenna
         </h1>

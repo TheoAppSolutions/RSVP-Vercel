@@ -12,14 +12,26 @@ export default function Design3() {
     <main className="min-h-screen bg-denim-50 text-denim-900">
       {/* Torn header panel */}
       <div className="relative bg-denim-800 pb-20 pt-14 text-white sm:pb-28">
-        <div className="mx-auto max-w-4xl px-6">
-          <p className="font-work text-xs uppercase tracking-[0.3em] text-denim-200/70">Save the date</p>
-          <h1 className="mt-3 font-bebas text-7xl leading-[0.9] tracking-wide sm:text-8xl md:text-9xl">
-            GLENNA&rsquo;S<br />65TH
-          </h1>
-          <p className="mt-4 max-w-md font-work text-denim-100/85">
-            Join us for an evening of Denim &amp; Diamonds — pull on your boots, bring your bling.
-          </p>
+        <div className="mx-auto flex max-w-4xl flex-col-reverse items-start gap-8 px-6 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="font-work text-xs uppercase tracking-[0.3em] text-denim-200/70">Save the date</p>
+            <h1 className="mt-3 font-bebas text-7xl leading-[0.9] tracking-wide sm:text-8xl md:text-9xl">
+              GLENNA&rsquo;S<br />65TH
+            </h1>
+            <p className="mt-4 max-w-md font-work text-denim-100/85">
+              Join us for an evening of Denim &amp; Diamonds — pull on your boots, bring your bling.
+            </p>
+          </div>
+
+          {/* Portrait photo, cropped to a square editorial frame */}
+          <div className="relative h-40 w-40 shrink-0 overflow-hidden border-2 border-white sm:h-48 sm:w-48">
+            <img
+              src="/glenna.jpg"
+              alt="Glenna"
+              className="h-full w-full object-cover"
+              style={{ objectPosition: "-45px -50px", height: "400px" }}
+            />
+          </div>
         </div>
         {/* torn bottom edge */}
         <svg

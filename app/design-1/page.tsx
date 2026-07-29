@@ -31,6 +31,16 @@ export default function Design1() {
       <div className="pointer-events-none absolute bottom-16 left-10 h-16 w-16 text-rhinestone/25 animate-sparkle [animation-delay:0.8s]"><Star className="h-full w-full" /></div>
 
       <section className="relative mx-auto flex max-w-xl flex-col items-center px-6 pb-24 pt-16 text-center">
+        {/* Portrait photo, cropped to a circle */}
+        <div className="relative mb-6 h-40 w-40 overflow-hidden rounded-full border-4 border-rhinestone shadow-[0_0_30px_-6px_rgba(212,175,55,0.55)]">
+          <img
+            src="/glenna.jpg"
+            alt="Glenna"
+            className="h-full w-full object-cover"
+            style={{ objectPosition: "-55px -60px", height: "400px" }}
+          />
+        </div>
+
         {/* Sheriff-style badge */}
         <div className="relative mb-8 flex h-32 w-32 items-center justify-center">
           <Star className="absolute h-full w-full text-denim-200/90 drop-shadow-[0_0_18px_rgba(180,200,230,0.35)]" />

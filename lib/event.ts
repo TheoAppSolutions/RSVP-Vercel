@@ -16,7 +16,7 @@ export const EVENT = {
   date: "Saturday, October 10, 2026",
   isoDate: "2026-10-10T17:00:00",
   time: "5:00 PM",
-  venue: "Glasshouse",
+  venue: "Glasshouse, Tacloban City, Leyte",
   dressCode: "Denim & Diamonds",
   rsvpBy: "September 26, 2026",
 };

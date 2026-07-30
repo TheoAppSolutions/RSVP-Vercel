@@ -88,7 +88,7 @@ export default function Design1() {
             src="/mayet.jpg"
             alt="Mayet"
             className="h-full w-full object-cover"
-            style={{ objectPosition: "-55px -60px", height: "400px" }}
+            style={{ objectPosition: "-10px 0px", height: "200px" }}
           />
         </div>
 

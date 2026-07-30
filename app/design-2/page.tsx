@@ -52,7 +52,7 @@ export default function Design2() {
               src="/mayet.jpg"
               alt="Mayet"
               className="h-full w-full object-cover"
-              style={{ objectPosition: "-50px -50px", height: "400px" }}
+              style={{ objectPosition: "-30px 0px", height: "250px" }}
             />
           </div>
         </div>

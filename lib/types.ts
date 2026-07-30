@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------
-// Shared RSVP contract. /glenna submit this same shape
+// Shared RSVP contract. /mayet submit this same shape
 // from their forms, and is processed by the same API handler
 // factory (see lib/rsvp/handler.ts). Client-specific copy (button labels,
 // success text, colors) stays in each client's own components — only the
@@ -17,9 +17,9 @@ export interface RSVPSubmission {
 }
 
 export interface RSVPClientConfig {
-  /** URL-safe id, e.g. "glenna" — used in logs and email subjects. */
+  /** URL-safe id, e.g. "mayet" — used in logs and email subjects. */
   slug: string;
-  /** Human-readable event name for email subject lines, e.g. "Glenna's 65th Birthday". */
+  /** Human-readable event name for email subject lines, e.g. "Mayet's 65th Birthday". */
   eventLabel: string;
   /** First name used in the guest confirmation email greeting. */
   honoreeFirstName: string;

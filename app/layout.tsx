@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import {
-  oswald,
+  script,
+  jost,
   garamond,
   inter,
   bebas,
@@ -9,8 +10,8 @@ import {
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Celebration RSVPs",
-  description: "RSVP for our upcoming birthday events.",
+  title: "Mayet's 65th Birthday — RSVP",
+  description: "RSVP for Mayet Sumagaysay's 65th Birthday Celebration.",
 };
 
 export default function RootLayout({
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${oswald.variable} ${garamond.variable} ${inter.variable} ${bebas.variable} ${work.variable} antialiased`}
+        className={`${script.variable} ${jost.variable} ${garamond.variable} ${inter.variable} ${bebas.variable} ${work.variable} antialiased`}
         style={{ margin: 0 }}
       >
         {children}

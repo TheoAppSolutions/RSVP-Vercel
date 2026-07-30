@@ -6,32 +6,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // --- Shared app shell (root + both clients' picker pages) ---
-        // --- Glenna's own design pages also use this "denim" scale ---
-        denim: {
-          50: PAGE_COLORS.denim50,
-          100: PAGE_COLORS.denim100,
-          200: PAGE_COLORS.denim200,
-          300: PAGE_COLORS.denim300,
-          400: PAGE_COLORS.denim400,
-          500: PAGE_COLORS.denim500,
-          600: PAGE_COLORS.denim600,
-          700: PAGE_COLORS.denim700,
-          800: PAGE_COLORS.denim800,
-          900: SHELL_COLORS.denim900, // same value as PAGE_COLORS.denim900 — shell + Glenna share this shade
+        // --- Shared app shell (root + client picker page) ---
+        // --- Mayet's own design pages also use this "garden" scale ---
+        garden: {
+          50: PAGE_COLORS.garden50,
+          100: PAGE_COLORS.garden100,
+          200: PAGE_COLORS.garden200,
+          300: PAGE_COLORS.garden300,
+          400: PAGE_COLORS.garden400,
+          500: PAGE_COLORS.garden500,
+          600: PAGE_COLORS.garden600,
+          700: PAGE_COLORS.garden700,
+          800: PAGE_COLORS.garden800,
+          900: SHELL_COLORS.garden900, // same value as PAGE_COLORS.garden900 — shell + Mayet share this shade
         },
-        rhinestone: SHELL_COLORS.rhinestone, // same value as PAGE_COLORS.rhinestone
+        marigold: SHELL_COLORS.marigold, // same value as PAGE_COLORS.marigold
 
-        // --- Glenna only: "Sapphire Soirée" design ---
-        sapphire: {
-          950: PAGE_COLORS.sapphire950,
-          900: PAGE_COLORS.sapphire900,
-          800: PAGE_COLORS.sapphire800,
+        // --- Mayet only: "Garden Soirée" design backdrop ---
+        moss: {
+          950: PAGE_COLORS.moss950,
+          900: PAGE_COLORS.moss900,
+          800: PAGE_COLORS.moss800,
         },
       },
       fontFamily: {
         script: ["var(--font-script)"],
-        oswald: ["var(--font-oswald)"],
+        jost: ["var(--font-jost)"],
         garamond: ["var(--font-garamond)"],
         inter: ["var(--font-inter)"],
         bebas: ["var(--font-bebas)"],

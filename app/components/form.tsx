@@ -4,8 +4,8 @@ import { useState } from "react";
 import { EVENT } from "../constants";
 
 // -----------------------------------------------------------------------
-// Glenna-scoped RSVP form.
-// Self-contained: posts to /api/ and hard-codes Glenna-specific
+// Mayet-scoped RSVP form.
+// Self-contained: posts to /api/ and hard-codes Mayet-specific
 // copy (reply date, success text). Takes a `theme` prop so each design
 // page can hand it its own Tailwind classes (see ../constants.ts for
 // STYLE_1/2/3) without duplicating the form logic per design. The wire
@@ -31,7 +31,7 @@ type Props = {
   formPrefix?: string;
 };
 
-export default function Form({ theme, formPrefix = "glenna" }: Props) {
+export default function Form({ theme, formPrefix = "mayet" }: Props) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [attending, setAttending] = useState<"yes" | "no" | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
@@ -73,11 +73,11 @@ export default function Form({ theme, formPrefix = "glenna" }: Props) {
     return (
       <div className={theme.success} role="status">
         <p className="text-lg font-medium">
-          {attending === "yes" ? "You're on the list! ✨" : "Thanks for letting us know."}
+          {attending === "yes" ? "You're on the list! 🌼" : "Thanks for letting us know."}
         </p>
         <p className="mt-2 text-sm opacity-80">
           {attending === "yes"
-            ? "We can't wait to sparkle with you on October 10."
+            ? "We can't wait to celebrate with you on November 19."
             : "You'll be missed — thank you for the reply."}
         </p>
       </div>
@@ -122,7 +122,7 @@ export default function Form({ theme, formPrefix = "glenna" }: Props) {
       </div>
 
       <div>
-        <label htmlFor={`${formPrefix}-message`} className={theme.label}>Message for Atty. Glenna (optional)</label>
+        <label htmlFor={`${formPrefix}-message`} className={theme.label}>Message for Mayet (optional)</label>
         <textarea id={`${formPrefix}-message`} name="message" rows={3} className={`focus-ring ${theme.input}`} placeholder="Leave a note or well-wish" />
       </div>
 

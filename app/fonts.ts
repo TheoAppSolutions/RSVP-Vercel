@@ -1,13 +1,13 @@
 import {
   Cormorant_Garamond,
   Dancing_Script,
-  Oswald,
+  Jost,
   Inter,
   Bebas_Neue,
   Work_Sans,
 } from 'next/font/google';
 
-// Glenna's fonts
+// Mayet's fonts
 export const script = Dancing_Script({
   subsets: ["latin"],
   variable: "--font-script",
@@ -15,9 +15,9 @@ export const script = Dancing_Script({
   display: 'swap',
 });
 
-export const oswald = Oswald({
+export const jost = Jost({
   subsets: ["latin"],
-  variable: "--font-oswald",
+  variable: "--font-jost",
   weight: ["300", "400", "500", "600"],
   display: 'swap',
 });

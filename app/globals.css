@@ -19,6 +19,6 @@ html {
   outline-offset: 3px;
 }
 
-.diamond-facet {
-  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+.petal-facet {
+  border-radius: 60% 40% 60% 40% / 50% 60% 40% 50%;
 }

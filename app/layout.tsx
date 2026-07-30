@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 import {
   script,
-  jost,
   garamond,
-  inter,
-  bebas,
+  fraunces,
+  jost,
   work,
 } from './fonts';
 import './globals.css';
@@ -22,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${script.variable} ${jost.variable} ${garamond.variable} ${inter.variable} ${bebas.variable} ${work.variable} antialiased`}
+        className={`${script.variable} ${garamond.variable} ${fraunces.variable} ${jost.variable} ${work.variable} antialiased`}
         style={{ margin: 0 }}
       >
         {children}

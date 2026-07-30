@@ -18,7 +18,3 @@ html {
   outline: 2px solid currentColor;
   outline-offset: 3px;
 }
-
-.petal-facet {
-  border-radius: 60% 40% 60% 40% / 50% 60% 40% 50%;
-}

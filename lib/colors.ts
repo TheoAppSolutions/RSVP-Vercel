@@ -1,4 +1,4 @@
-/** Shared app shell — client picker pages (app/page.tsx). */
+/** Shared app shell — client picker page (app/page.tsx). */
 export const SHELL_COLORS = {
   garden900: "#241B0E",
   marigold: "#FFA82C",
@@ -6,12 +6,12 @@ export const SHELL_COLORS = {
 
 /**
  * Mayet — "Garden Colors" palette.
- * Built from the four brand colors in the client's mood board:
- * burnt orange, coral pink, marigold, and olive gold, over an
- * ivory-to-umber neutral ramp.
+ * The four brand colors from the client's mood board — burnt orange,
+ * coral pink, marigold, and olive gold — over an ivory-to-umber neutral
+ * ramp used for backgrounds, text, and structure.
  */
 export const PAGE_COLORS = {
-  garden50: "#FBF3E7", // ivory
+  garden50: "#FBF3E7", // ivory — primary background
   garden100: "#F5E4C8",
   garden200: "#ECC98F",
   garden300: "#E0A94F",
@@ -21,13 +21,22 @@ export const PAGE_COLORS = {
   garden700: "#8A3403",
   garden800: "#5C2402",
   garden900: "#241B0E", // deep umber — same value as SHELL_COLORS.garden900
-  moss950: "#16220D", // deepest evening-garden green (design-2 backdrop)
-  moss900: "#1F2F12",
-  moss800: "#2A3D18",
   marigold: "#FFA82C", // same value as SHELL_COLORS.marigold
 } as const;
 
-/** The four exact brand hexes from the mood board, for one-off accents (petals, gradients). */
+/**
+ * Leaf-green scale, mixed to sit alongside the four brand colors without
+ * fighting them — used only for the vine/foliage illustrations.
+ */
+export const LEAF_COLORS = {
+  leaf200: "#C3D3A4",
+  leaf400: "#8FAE5D",
+  leaf600: "#5B7C3A",
+  leaf800: "#3F5726",
+  leaf900: "#23300F",
+} as const;
+
+/** The four exact brand hexes from the mood board, for direct use in illustrations and swatch chips. */
 export const ACCENT = {
   burntOrange: "#E15505",
   coralPink: "#F94063",

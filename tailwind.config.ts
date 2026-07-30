@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import { SHELL_COLORS, PAGE_COLORS } from "./lib/colors";
+import { SHELL_COLORS, PAGE_COLORS, LEAF_COLORS } from "./lib/colors";
 
 const config: Config = {
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
@@ -21,35 +21,38 @@ const config: Config = {
           900: SHELL_COLORS.garden900, // same value as PAGE_COLORS.garden900 — shell + Mayet share this shade
         },
         marigold: SHELL_COLORS.marigold, // same value as PAGE_COLORS.marigold
+        coral: "#F94063",
+        olive: "#A39814",
 
-        // --- Mayet only: "Garden Soirée" design backdrop ---
-        moss: {
-          950: PAGE_COLORS.moss950,
-          900: PAGE_COLORS.moss900,
-          800: PAGE_COLORS.moss800,
+        // --- Foliage scale, used only for vine/leaf illustrations ---
+        leaf: {
+          200: LEAF_COLORS.leaf200,
+          400: LEAF_COLORS.leaf400,
+          600: LEAF_COLORS.leaf600,
+          800: LEAF_COLORS.leaf800,
+          900: LEAF_COLORS.leaf900,
         },
       },
       fontFamily: {
         script: ["var(--font-script)"],
         jost: ["var(--font-jost)"],
         garamond: ["var(--font-garamond)"],
-        inter: ["var(--font-inter)"],
-        bebas: ["var(--font-bebas)"],
+        fraunces: ["var(--font-fraunces)"],
         work: ["var(--font-work)"],
       },
       keyframes: {
-        sparkle: {
-          "0%, 100%": { opacity: "0.3", transform: "scale(0.9)" },
-          "50%": { opacity: "1", transform: "scale(1.1)" },
+        sway: {
+          "0%, 100%": { transform: "rotate(-1.5deg)" },
+          "50%": { transform: "rotate(1.5deg)" },
         },
-        shimmer: {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
+        drift: {
+          "0%, 100%": { opacity: "0.4", transform: "translateY(0px)" },
+          "50%": { opacity: "0.9", transform: "translateY(-6px)" },
         },
       },
       animation: {
-        sparkle: "sparkle 2.4s ease-in-out infinite",
-        shimmer: "shimmer 3s linear infinite",
+        sway: "sway 6s ease-in-out infinite",
+        drift: "drift 4.5s ease-in-out infinite",
       },
     },
   },

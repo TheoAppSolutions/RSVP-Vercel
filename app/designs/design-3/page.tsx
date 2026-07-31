@@ -1,5 +1,5 @@
-import Form from "../components/form";
-import { EVENT, STYLE_3 } from "../constants";
+import Form from "../../components/form";
+import { EVENT, STYLE_3 } from "../../../lib/constants";
 
 // -----------------------------------------------------------------------
 // Design 3 — "Garden Mood Board"
@@ -52,7 +52,7 @@ export default function Design3() {
               src="/mayet.jpg"
               alt="Mayet"
               className="h-full w-full object-cover"
-              style={{ objectPosition: "-25px 0px", height: "300px" }}
+              style={{ objectPosition: "-45px -50px", height: "400px" }}
             />
           </div>
         </div>

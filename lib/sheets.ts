@@ -1,5 +1,5 @@
 import { google } from "googleapis";
-import type { RSVPClientConfig, RSVPSubmission } from "./types";
+import type { RSVPClientConfig, RSVPSubmission } from "@/lib/types";
 
 // -----------------------------------------------------------------------
 // One Google service account, shared across every client. Each client

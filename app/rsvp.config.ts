@@ -1,5 +1,5 @@
 import type { RSVPClientConfig } from "@/lib/types";
-import { EVENT } from "../lib/event";
+import { EVENT } from "@/lib/event";
 
 // -----------------------------------------------------------------------
 // Mayet's backend wiring — which sheet to write to and who gets owner

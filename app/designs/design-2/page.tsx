@@ -1,5 +1,5 @@
-import Form from "../components/form";
-import { EVENT, STYLE_2 } from "../constants";
+import Form from "../../components/form";
+import { EVENT, STYLE_2 } from "../../../lib/constants";
 
 // -----------------------------------------------------------------------
 // Design 2 — "Pressed Petals"
@@ -52,7 +52,7 @@ export default function Design2() {
               src="/mayet.jpg"
               alt="Mayet"
               className="h-full w-full object-cover"
-              style={{ objectPosition: "-30px 0px", height: "250px" }}
+              style={{ objectPosition: "-50px -50px", height: "400px" }}
             />
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import type { RSVPClientConfig, RSVPSubmission } from "./types";
-import { appendRSVPRow } from "./sheets";
-import { sendRSVPEmails } from "./email";
+import type { RSVPClientConfig, RSVPSubmission } from "@/lib/types";
+import { appendRSVPRow } from "@/lib/sheets";
+import { sendRSVPEmails } from "@/lib/email";
 
 // -----------------------------------------------------------------------
 // One handler factory shared by every client. A client's route.ts is

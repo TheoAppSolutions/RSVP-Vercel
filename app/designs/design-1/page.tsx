@@ -59,7 +59,7 @@ export default function Design1() {
 
       <section className="relative mx-auto flex max-w-xl flex-col items-center px-6 pb-24 pt-14 text-center">
         {/* The vine arch */}
-        <svg viewBox="0 0 480 270" className="h-56 w-full max-w-md sm:h-64">
+        <svg viewBox="0 0 480 270" className="h-56 w-full max-w-md sm:h-64" style={{ position: "absolute", top: "-20px" }}>
           <path d={LEFT_STEM} fill="none" stroke="#3F5726" strokeWidth="3" strokeLinecap="round" />
           <path d={RIGHT_STEM} fill="none" stroke="#3F5726" strokeWidth="3" strokeLinecap="round" />
 
@@ -83,12 +83,13 @@ export default function Design1() {
         </svg>
 
         {/* Portrait photo, cropped to a circle, hung at the arch's peak */}
-        <div className="relative -mt-6 h-36 w-36 overflow-hidden rounded-full border-[3px] border-white shadow-[0_8px_24px_-6px_rgba(74,46,23,0.35)] ring-1 ring-garden-300/60">
+        <div className="relative -mt-6 h-36 w-36 overflow-hidden rounded-full border-[3px] border-white shadow-[0_8px_24px_-6px_rgba(74,46,23,0.35)] ring-1 ring-garden-300/60"
+          style={{ marginTop: "10px", height: "200px", width: "200px" }}>
           <img
             src="/mayet.jpg"
             alt="Mayet"
             className="h-full w-full object-cover"
-            style={{ objectPosition: "-55px -60px", height: "400px" }}
+            style={{ objectPosition: "0 0", height: "200px" }}
           />
         </div>
 

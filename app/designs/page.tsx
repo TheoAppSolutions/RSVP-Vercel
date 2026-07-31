@@ -18,7 +18,7 @@ const designs = [
   },
 ];
 
-export default function MayetHome() {
+export default function DesignsPicker() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-garden-50 px-6 py-20 text-garden-900">
       <p className="font-jost text-xs uppercase tracking-[0.3em] text-garden-500">Mayet's 65th</p>

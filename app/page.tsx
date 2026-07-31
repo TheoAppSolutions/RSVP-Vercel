@@ -1,9 +1,12 @@
+import Link from "next/link";
 import { EVENT } from "@/lib/event";
 
 // -----------------------------------------------------------------------
-// Announcement — "Save the Date"
-// A standalone poster page (not the RSVP form) matching the client's
-// reference layout: crossed guide-lines, a tilted date card with a
+// Home page — "Save the Date"
+// This is now the site's default page (/). The RSVP form designs live
+// under /designs (see app/designs/page.tsx for the picker, and
+// app/designs/design-1|2|3 for each one). This page is a standalone
+// announcement poster: crossed guide-lines, a tilted date card with a
 // glowing bloom in place of a diamond, the wordmark and weekday tag set
 // inside the card in a light tone for contrast, then "save the date."
 // -----------------------------------------------------------------------
@@ -54,7 +57,7 @@ function GlowBloom({ className }: { className?: string }) {
   );
 }
 
-export default function Announcement() {
+export default function Home() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-garden-50">
       {/* Crossed guide-lines, like a torn calendar sheet */}
@@ -72,7 +75,7 @@ export default function Announcement() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
                 <LeafMark className="h-6 w-6" light />
-                <span className="font-fraunces text-xl italic text-garden-50">Mayet65</span>
+                <span className="font-fraunces text-xl italic text-garden-50">Mayet@65</span>
               </div>
               <span className="font-jost text-xl font-semibold lowercase tracking-wide text-garden-50">thu</span>
             </div>
